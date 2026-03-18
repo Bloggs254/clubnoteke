@@ -1,29 +1,6 @@
-const CACHE_NAME = 'clubnoteke-v2';
-const ASSETS = [
-  '/',
-  '/index.html',
-  '/about.html',
-  '/membership.html',
-  '/events.html',
-  '/know-your-car.html',
-  '/gallery.html',
-  '/community.html',
-  '/dashboard.html',
-  '/garage.html',
-  '/css/shared.css',
-  '/css/style.css',
-  '/css/gallery.css',
-  '/js/main.js',
-  '/js/session-guard.js',
-  '/js/gallery.js',
-  '/assets/club_logo.png',
-  '/assets/hero-wide-lineup.jpg'
-];
+const CACHE_NAME = 'clubnoteke-v3';
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
   self.skipWaiting();
 });
 
@@ -37,7 +14,17 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.match(event.request).then((response) => response || fetch(event.request))
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      });
+    })
   );
 });

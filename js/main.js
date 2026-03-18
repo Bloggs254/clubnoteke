@@ -139,9 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       e.preventDefault();
-      // TODO: Replace alert with a real form backend (e.g. Formspree, EmailJS)
-      alert('Thank you! Your submission has been received.');
       form.reset();
+      // Show toast instead of alert
+      const toast = document.createElement('div');
+      toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:0.85rem 1.5rem;border-radius:10px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:0.5rem;';
+      toast.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#25d366;"></i> Message sent! We will get back to you soon.';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
     });
   });
 
@@ -299,8 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js').then(reg => {
-        console.log('SW Registered');
-      }).catch(err => console.log('SW Failed', err));
+      }).catch(() => {});
     });
   }
 
