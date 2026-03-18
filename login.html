@@ -262,6 +262,72 @@
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             margin: 1.8rem 0;
         }
+
+        /* Biometric Button */
+        .biometric-section {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .biometric-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            color: rgba(255,255,255,0.25);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .biometric-divider::before,
+        .biometric-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+        .btn-biometric {
+            width: 100%;
+            padding: 0.9rem;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: rgba(255,255,255,0.85);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .btn-biometric:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .btn-biometric:active {
+            transform: scale(0.98);
+        }
+        .btn-biometric i {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+        .btn-biometric.registered {
+            border-color: rgba(37,211,102,0.4);
+            color: #25d366;
+        }
+        .btn-biometric.registered i {
+            color: #25d366;
+        }
+        #biometric-status {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.4);
+            margin-top: 0.6rem;
+            min-height: 1.2em;
+        }
+        #biometric-status.success { color: #25d366; }
+        #biometric-status.error   { color: var(--accent-color); }
     </style>
     <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
 </head>
@@ -332,6 +398,16 @@
                     <i class="fa-solid fa-circle-info" style="color:var(--accent-color); margin-right:6px; opacity:0.7;"></i>
                     <strong style="color:rgba(255,255,255,0.55);">Testing mode:</strong> Any email and password will log you in. Real auth coming before public launch.
                 </p>
+            </div>
+
+            <!-- Biometric Login Option -->
+            <div class="biometric-divider">or sign in with</div>
+            <div class="biometric-section">
+                <button type="button" class="btn-biometric" id="biometricBtn" onclick="handleBiometric()">
+                    <i class="fa-solid fa-fingerprint" id="biometricIcon"></i>
+                    <span id="biometricLabel">Use Face ID / Fingerprint</span>
+                </button>
+                <div id="biometric-status"></div>
             </div>
         </form>
 
@@ -405,6 +481,175 @@
                     window.location.href = 'dashboard.html';
                 }, 900);
             });
+        });
+
+        // ── WebAuthn Biometric Logic ──────────────────────────────────────────
+        function setBioStatus(msg, type) {
+            var el = document.getElementById('biometric-status');
+            if (!el) return;
+            el.textContent = msg;
+            el.className = type || '';
+        }
+
+        function setSession(name) {
+            localStorage.setItem('clubnote_member_name', name);
+            var session = {
+                token: 'CNK-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                expiry: Date.now() + (7 * 24 * 60 * 60 * 1000),
+                lastActive: Date.now()
+            };
+            localStorage.setItem('clubnote_session', JSON.stringify(session));
+        }
+
+        function showLoader(name) {
+            var firstName = (name || 'Member').split(' ')[0];
+            var loader = document.getElementById('signin-loader');
+            var loaderName = document.getElementById('loader-name');
+            if (loader && loaderName) {
+                loaderName.textContent = 'Welcome, ' + firstName + '!';
+                loader.classList.add('active');
+            }
+            setTimeout(function() { window.location.href = 'dashboard.html'; }, 900);
+        }
+
+        async function handleBiometric() {
+            // Check WebAuthn support
+            if (!window.PublicKeyCredential) {
+                setBioStatus('Biometric login is not supported on this device or browser.', 'error');
+                return;
+            }
+
+            var btn = document.getElementById('biometricBtn');
+            var label = document.getElementById('biometricLabel');
+            var icon = document.getElementById('biometricIcon');
+            var stored = localStorage.getItem('clubnote_biometric_id');
+
+            if (stored) {
+                // ── AUTHENTICATE with existing credential ──────────────────
+                try {
+                    setBioStatus('Waiting for biometric...');
+                    btn.disabled = true;
+
+                    var credId = Uint8Array.from(atob(stored), c => c.charCodeAt(0));
+                    var challenge = new Uint8Array(32);
+                    window.crypto.getRandomValues(challenge);
+
+                    var assertion = await navigator.credentials.get({
+                        publicKey: {
+                            challenge: challenge,
+                            allowCredentials: [{ id: credId, type: 'public-key' }],
+                            userVerification: 'preferred',
+                            timeout: 60000
+                        }
+                    });
+
+                    if (assertion) {
+                        setBioStatus('Biometric verified! Signing in...', 'success');
+                        var name = localStorage.getItem('clubnote_member_name') || 'Member';
+                        setSession(name);
+                        setTimeout(function() { showLoader(name); }, 600);
+                    }
+                } catch(err) {
+                    btn.disabled = false;
+                    if (err.name === 'NotAllowedError') {
+                        setBioStatus('Biometric cancelled. Try again or use password.', 'error');
+                    } else {
+                        setBioStatus('Biometric failed. Please use password to sign in.', 'error');
+                    }
+                }
+
+            } else {
+                // ── REGISTER new credential ────────────────────────────────
+                // First sign in with password, then offer to register biometric
+                var name = (document.getElementById('display-name').value || '').trim()
+                         || localStorage.getItem('clubnote_member_name') || 'CLUBnoteKE Member';
+
+                if (!name || name === 'Member') {
+                    setBioStatus('Please enter your name above first, then set up biometrics.', 'error');
+                    document.getElementById('display-name').focus();
+                    return;
+                }
+
+                try {
+                    setBioStatus('Setting up biometric login...');
+                    btn.disabled = true;
+
+                    var challenge = new Uint8Array(32);
+                    window.crypto.getRandomValues(challenge);
+
+                    var userId = new TextEncoder().encode(name + '-clubnoteke');
+
+                    var credential = await navigator.credentials.create({
+                        publicKey: {
+                            challenge: challenge,
+                            rp: {
+                                name: 'CLUBnoteKE',
+                                id: window.location.hostname
+                            },
+                            user: {
+                                id: userId,
+                                name: name,
+                                displayName: name
+                            },
+                            pubKeyCredParams: [
+                                { type: 'public-key', alg: -7 },   // ES256
+                                { type: 'public-key', alg: -257 }  // RS256
+                            ],
+                            authenticatorSelection: {
+                                userVerification: 'preferred',
+                                residentKey: 'preferred'
+                            },
+                            timeout: 60000
+                        }
+                    });
+
+                    if (credential) {
+                        // Store credential ID in localStorage
+                        var credIdB64 = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+                        localStorage.setItem('clubnote_biometric_id', credIdB64);
+                        localStorage.setItem('clubnote_member_name', name);
+
+                        // Update button to show registered state
+                        btn.classList.add('registered');
+                        icon.className = 'fa-solid fa-check-circle';
+                        label.textContent = 'Biometric Registered!';
+                        setBioStatus('Next time, tap this button to sign in instantly.', 'success');
+
+                        // Sign in automatically after registering
+                        setSession(name);
+                        setTimeout(function() { showLoader(name); }, 1500);
+                    }
+                } catch(err) {
+                    btn.disabled = false;
+                    if (err.name === 'NotAllowedError') {
+                        setBioStatus('Biometric setup cancelled.', 'error');
+                    } else if (err.name === 'NotSupportedError') {
+                        setBioStatus('This device does not support biometric authentication.', 'error');
+                    } else {
+                        setBioStatus('Could not set up biometrics. Use password to sign in.', 'error');
+                    }
+                }
+            }
+        }
+
+        // On load - check if biometric is already registered and update button
+        document.addEventListener('DOMContentLoaded', function() {
+            var stored = localStorage.getItem('clubnote_biometric_id');
+            if (stored) {
+                var btn = document.getElementById('biometricBtn');
+                var icon = document.getElementById('biometricIcon');
+                var label = document.getElementById('biometricLabel');
+                if (btn) {
+                    icon.className = 'fa-solid fa-fingerprint';
+                    label.textContent = 'Sign In with Face ID / Fingerprint';
+                    setBioStatus('Biometric login is set up on this device.');
+                }
+            }
+            // Check if WebAuthn is available at all
+            if (!window.PublicKeyCredential) {
+                var btn = document.getElementById('biometricBtn');
+                if (btn) btn.style.display = 'none';
+            }
         });
 
         function togglePwd() {
