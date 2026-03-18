@@ -17,6 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+
+    // Close mobile menu when any nav link is tapped
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        const icon = mobileBtn.querySelector('i');
+        if (icon) {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+    });
   }
 
   // Sticky Navigation on Scroll

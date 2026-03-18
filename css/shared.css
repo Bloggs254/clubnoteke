@@ -321,7 +321,7 @@ body {
 /* Responsive Grid/Containers */
 @media (max-width: 1024px) {
   .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
-  .nav-links { display: none; }
+  .nav-links { left: -100%; }
   .mobile-menu-btn { display: block; }
 }
 

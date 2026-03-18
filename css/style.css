@@ -690,7 +690,7 @@ img {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav-links {
     position: fixed;
     top: var(--nav-height);
@@ -700,11 +700,18 @@ img {
     background-color: var(--primary-color);
     flex-direction: column;
     padding: 2rem;
-    transition: left var(--transition-normal);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex !important;
+    z-index: 999;
+    overflow-y: auto;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .nav-links.active {
     left: 0;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .mobile-menu-btn {
