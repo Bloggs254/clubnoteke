@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Login | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Log in to your CLUBnoteKE Member Dashboard to view your digital ID, partner discounts, and private event RSVPs.">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(195, 0, 47, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(195, 0, 47, 0.08) 0%, transparent 40%);
+            position: relative;
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            padding: 3rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            color: var(--text-light);
+        }
+
+        .login-logo {
+            margin-bottom: 0.5rem;
+        }
+
+        .login-logo img {
+            filter: brightness(0) invert(1);
+        }
+
+        .login-brand-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .login-brand-name span {
+            color: var(--accent-color);
+        }
+
+        .login-subtitle {
+            color: rgba(255, 255, 255, 0.55);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-light);
+            transition: all var(--transition-fast);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: rgba(195, 0, 47, 0.06);
+            box-shadow: 0 0 0 3px rgba(195, 0, 47, 0.2);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.55);
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--accent-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: opacity var(--transition-fast);
+        }
+
+        .forgot-password:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .signup-prompt {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95rem;
+        }
+
+        .signup-prompt a {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent-color);
+            transition: color var(--transition-fast);
+        }
+
+        .signup-prompt a:hover {
+            color: var(--accent-color);
+        }
+
+        /* macOS Wavy Entrance Animation */
+        @keyframes cardWave {
+          0%   { opacity: 0; transform: translateY(30px) scale(0.96); }
+          60%  { opacity: 1; transform: translateY(-6px) scale(1.01); }
+          80%  { transform: translateY(3px) scale(0.995); }
+          100% { transform: translateY(0) scale(1); }
+        }
+
+        .login-container {
+            animation: cardWave 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            position: relative;
+        }
+
+        /* Password Toggle Styling - removed as it's inline now */
+
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: color var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .back-home:hover {
+            color: #fff;
+        }
+
+        /* Sign-in loader overlay */
+        #signin-loader {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #111111;
+            z-index: 99999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            animation: loaderFadeIn 0.2s ease forwards;
+        }
+        #signin-loader.active { display: flex; }
+        @keyframes loaderFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .signin-spinner {
+            width: 80px;
+            height: 80px;
+            animation: signinSpin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: brightness(0) invert(1);
+        }
+        @keyframes signinSpin {
+            0%   { transform: rotate(0deg) scale(1); }
+            50%  { transform: rotate(180deg) scale(1.12); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .signin-loader-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.05em;
+        }
+        .signin-loader-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .dark-mode-btn-login {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .dark-mode-btn-login:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 1.8rem 0;
+        }
+    </style>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Back Link -->
+    <a href="index.html" class="back-home">
+        <i class="fa-solid fa-arrow-left"></i> Back to Site
+    </a>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="dark-mode-btn-login" aria-label="Toggle Dark Mode">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <!-- Login Card -->
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 50px; width: auto; object-fit: contain; margin: 0 auto 0.75rem;">
+        </div>
+        <div class="login-brand-name">CLUB<span>note</span>KE</div>
+        <p class="login-subtitle">Member Portal Login</p>
+
+        <form id="loginForm" action="dashboard.html" method="GET">
+            <div class="form-group">
+                <label class="form-label" for="member-id">Email or Member ID</label>
+                <input type="text" id="member-id" class="form-control" required placeholder="CNK-2026-### or Email">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="display-name">Your Name</label>
+                <input type="text" id="display-name" class="form-control" placeholder="e.g. John Doe" autocomplete="name">
+                <small style="color:rgba(255,255,255,0.35);font-size:0.78rem;margin-top:0.35rem;display:block;">Used for your dashboard greeting</small>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div style="position: relative;">
+                    <input type="password" id="password" class="form-control" required placeholder="Enter your password" style="padding-right: 3rem;">
+                    <button type="button" id="togglePassword" onclick="togglePwd()" style="
+                        position: absolute;
+                        right: 1rem;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        color: rgba(255,255,255,0.4);
+                        font-size: 1rem;
+                        padding: 0;
+                        display: flex;
+                        align-items: center;
+                        transition: color 0.2s;
+                    " aria-label="Toggle password visibility">
+                        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="login-options">
+                <label class="remember-me">
+                    <input type="checkbox" checked> Remember me
+                </label>
+                <a href="contact.html" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login">Sign In</button>
+
+            <div style="margin-top:1.5rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.9rem 1.1rem; text-align:left;">
+                <p style="font-size:0.8rem; color:rgba(255,255,255,0.4); margin:0; line-height:1.6;">
+                    <i class="fa-solid fa-circle-info" style="color:var(--accent-color); margin-right:6px; opacity:0.7;"></i>
+                    <strong style="color:rgba(255,255,255,0.55);">Testing mode:</strong> Any email and password will log you in. Real auth coming before public launch.
+                </p>
+            </div>
+        </form>
+
+        <hr class="divider">
+        <p class="signup-prompt">Not a member yet? <a href="membership.html">Join the Club</a></p>
+    </div>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for logout reasons
+            const urlParams = new URLSearchParams(window.location.search);
+            const reason = urlParams.get('reason');
+            if (reason === 'idle' || reason === 'expired' || reason === 'manual') {
+                const msg = reason === 'idle' ? 'Signed out due to inactivity.' :
+                            reason === 'expired' ? 'Your session has expired. Please sign in again.' :
+                            'You have been signed out.';
+                const notice = document.createElement('div');
+                notice.style.cssText = 'background:rgba(195,0,47,0.12);border:1px solid rgba(195,0,47,0.3);border-radius:10px;padding:0.8rem 1.1rem;margin-bottom:1.5rem;font-size:0.85rem;color:rgba(255,255,255,0.7);text-align:center;';
+                notice.innerHTML = '<i class="fa-solid fa-circle-info" style="color:var(--accent-color);margin-right:6px;"></i>' + msg;
+                const form = document.getElementById('loginForm');
+                if (form) form.prepend(notice);
+                history.replaceState(null, '', window.location.pathname);
+            }
+
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = loginForm.querySelector('button[type="submit"]');
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get name — prefer the dedicated name field, fall back to deriving from email/ID
+                var displayName = (document.getElementById('display-name').value || '').trim();
+                var memberId    = document.getElementById('member-id').value.trim();
+
+                var name;
+                if (displayName) {
+                    // Use what the user typed in the name field
+                    name = displayName.replace(/\b\w/g, c => c.toUpperCase()).trim();
+                } else {
+                    // Use existing stored name (set during membership registration or previous login)
+                    var stored = localStorage.getItem('clubnote_member_name');
+                    name = (stored && stored !== 'Member' && stored !== 'John Doe') ? stored : 'Member';
+                }
+
+                localStorage.setItem('clubnote_member_name', name);
+
+                // Create session
+                const session = {
+                    token: 'CNK-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                    expiry: Date.now() + (7 * 24 * 60 * 60 * 1000),
+                    lastActive: Date.now()
+                };
+                localStorage.setItem('clubnote_session', JSON.stringify(session));
+
+                // Show spinning logo overlay with personalised greeting
+                var firstName = name.split(' ')[0];
+                var loader = document.getElementById('signin-loader');
+                var loaderName = document.getElementById('loader-name');
+                loaderName.textContent = 'Welcome, ' + firstName + '!';
+                loader.classList.add('active');
+
+                // Disable button to prevent double submit
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Signing In...';
+
+                // Redirect after logo spins briefly
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 900);
+            });
+        });
+
+        function togglePwd() {
+            const pwd = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            const btn = document.getElementById('togglePassword');
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+                btn.style.color = 'rgba(255,255,255,0.7)';
+            } else {
+                pwd.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+                btn.style.color = 'rgba(255,255,255,0.4)';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="CLUBnoteKE Admin Portal - Secure administrative access for club management.">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background-color: var(--bg-gray); padding-top: 5rem; }
+        .admin-container { max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary-color);
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .login-box {
+            background: white; padding: 3rem; border-radius: 20px; text-align: center;
+            box-shadow: var(--shadow-lg); width: 100%; max-width: 400px;
+        }
+        .admin-card { background: white; padding: 2rem; border-radius: 16px; box-shadow: var(--shadow-md); margin-bottom: 2rem; }
+        
+        /* Wavy Animation */
+        @keyframes wavyEntrance {
+            0% { transform: scale(0.5) translateY(100px) rotateX(-30deg); opacity: 0; filter: blur(20px); }
+            40% { transform: scale(1.05) translateY(-20px) rotateX(10deg); opacity: 1; filter: blur(0); }
+            70% { transform: scale(0.98) translateY(10px) rotateX(-5deg); }
+            100% { transform: scale(1) translateY(0) rotateX(0); }
+        }
+        .login-box {
+            animation: wavyEntrance 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 0.8rem;
+            color: #999;
+            cursor: pointer;
+            z-index: 10;
+            padding: 5px;
+        }
+        .password-toggle:hover { color: var(--accent-color); }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+        .admin-input { width: 100%; padding: 0.8rem; border: 1px solid #DDD; border-radius: 8px; font-family: inherit; }
+        .news-preview { margin-top: 2rem; border-top: 1px solid #EEE; padding-top: 2rem; }
+        .news-item-admin { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-gray); border-radius: 8px; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="position: fixed; top: 1.5rem; right: 2rem; padding: 0.5rem; border: none; font-size: 1.2rem; color: var(--text-muted); z-index: 1001;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-box">
+            <img src="assets/club_logo.png" alt="Logo" style="height: 60px; margin-bottom: 2rem;">
+            <h2 style="font-family: 'Outfit'; margin-bottom: 1.5rem;">Admin Access</h2>
+            <div class="input-group">
+                <div class="password-wrapper">
+                    <input type="password" id="admin-pass" class="admin-input" placeholder="Enter Admin Password">
+                    <i class="fa-solid fa-eye password-toggle" id="toggle-admin-pass"></i>
+                </div>
+            </div>
+            <button onclick="checkPass()" class="btn btn-primary" style="width: 100%;">Login to Portal</button>
+            <p id="login-error" style="color: var(--accent-color); font-size: 0.85rem; margin-top: 1rem; display: none;">Invalid Password. Try again.</p>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-card">
+            <h1 style="font-family: 'Outfit'; margin-bottom: 2rem;"><i class="fa-solid fa-user-shield" style="color: var(--accent-color);"></i> News Manager</h1>
+            
+            <form id="news-form">
+                <div class="input-group">
+                    <label>News Title</label>
+                    <input type="text" id="news-title" class="admin-input" placeholder="e.g. New Partner Joined" required>
+                </div>
+                <div class="input-group">
+                    <label>Category Icon (FontAwesome class)</label>
+                    <select id="news-icon" class="admin-input">
+                        <option value="fa-wrench">Mechanic (Wrench)</option>
+                        <option value="fa-bullhorn">Announcement (Megaphone)</option>
+                        <option value="fa-camera-retro">Event Photos (Camera)</option>
+                        <option value="fa-flag-checkered">Road Trip (Checkered Flag)</option>
+                        <option value="fa-tags">Discount (Tags)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Short Description</label>
+                    <textarea id="news-desc" class="admin-input" rows="3" placeholder="Snippet for members..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Post News Update</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h2 style="font-family: 'Outfit'; margin-bottom: 1.5rem;">Current News Feed</h2>
+            <div id="admin-news-list">
+                <!-- News items will list here -->
+            </div>
+            <button onclick="clearNews()" class="btn btn-outline" style="margin-top: 1rem; color: #666; font-size: 0.8rem;">Reset to Default Feed</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="dashboard.html" class="guide-link">Back to Member Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ BEFORE PRODUCTION: Replace this with a server-side auth call.
+        // Storing passwords in client-side JS is insecure — anyone can view source.
+        const pass = "noteclub2026";
+        
+        // Toggle Admin Password
+        document.getElementById('toggle-admin-pass').addEventListener('click', function() {
+            const passInput = document.getElementById('admin-pass');
+            const type = passInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        function checkPass() {
+            const input = document.getElementById('admin-pass').value;
+            if (input === pass) {
+                document.getElementById('login-overlay').style.display = 'none';
+                sessionStorage.setItem('clubnote_admin_auth', 'true');
+                renderAdminNews();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        // Check session on load
+        if (sessionStorage.getItem('clubnote_admin_auth') === 'true') {
+            document.getElementById('login-overlay').style.display = 'none';
+        }
+
+        const defaultNews = [
+            { icon: "fa-wrench", title: "New Mechanic Partner Joined", desc: "Specialized Nissan Note diagnostic team now available in Mombasa CBD. 15% discount for members." },
+            { icon: "fa-camera-retro", title: "Photo of the Month Winner", desc: "Congratulations to @NoteStance for the stunning Samburu sunset shot!" },
+            { icon: "fa-flag-checkered", title: "Naivasha Drive RSVP Open", desc: "Registration for the May Road Trip is now open. Only 10 slots remaining." }
+        ];
+
+        function renderAdminNews() {
+            const news = JSON.parse(localStorage.getItem('clubnote_news')) || defaultNews;
+            const list = document.getElementById('admin-news-list');
+            list.innerHTML = news.map((item, index) => `
+                <div class="news-item-admin">
+                    <div>
+                        <i class="fa-solid ${item.icon}" style="color: var(--accent-color); margin-right: 10px;"></i>
+                        <strong>${item.title}</strong>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 4px;">${item.desc}</p>
+                    </div>
+                    <button onclick="deleteNews(${index})" style="background: none; border: none; color: #EF4444; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('news-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const news = JSON.parse(localStorage.getItem('clubnote_news')) || [...defaultNews];
+            const newItem = {
+                title: document.getElementById('news-title').value,
+                icon: document.getElementById('news-icon').value,
+                desc: document.getElementById('news-desc').value
+            };
+            news.unshift(newItem); // Newest first
+            localStorage.setItem('clubnote_news', JSON.stringify(news));
+            e.target.reset();
+            renderAdminNews();
+            alert('News posted successfully!');
+        });
+
+        window.deleteNews = (index) => {
+            if (confirm('Delete this news item?')) {
+                const news = JSON.parse(localStorage.getItem('clubnote_news')) || [...defaultNews];
+                news.splice(index, 1);
+                localStorage.setItem('clubnote_news', JSON.stringify(news));
+                renderAdminNews();
+            }
+        };
+
+        window.clearNews = () => {
+            if (confirm('This will reset all news back to defaults. Proceed?')) {
+                localStorage.removeItem('clubnote_news');
+                renderAdminNews();
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', renderAdminNews);
+    </script>
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>

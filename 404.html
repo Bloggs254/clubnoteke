@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>404 - Page Not Found | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Page not found - CLUBnoteKE.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .error-page::before {
+            content: '404';
+            position: absolute;
+            font-family: 'Outfit', sans-serif;
+            font-size: 30vw;
+            font-weight: 800;
+            color: rgba(255,255,255,0.03);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            user-select: none;
+        }
+        .error-content {
+            position: relative;
+            z-index: 2;
+            color: var(--text-light);
+            max-width: 560px;
+        }
+        .error-icon {
+            font-size: 5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        .error-code {
+            font-family: 'Outfit', sans-serif;
+            font-size: 7rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        .error-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .error-desc {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .error-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn" style="position: static;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 404 Content -->
+    <section class="error-page">
+        <div class="error-content">
+            <div class="error-icon"><i class="fa-solid fa-car-burst"></i></div>
+            <div class="error-code">404</div>
+            <div class="error-divider"></div>
+            <h1 class="error-title">Took a Wrong Turn!</h1>
+            <p class="error-desc">Looks like this road doesn't exist. The page you're looking for may have moved, been renamed, or doesn't exist.</p>
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-primary"><i class="fa-solid fa-house" style="margin-right: 8px;"></i>Back to Home</a>
+                <a href="contact.html" class="btn btn-outline">Report an Issue</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>
+
+
+
+
+

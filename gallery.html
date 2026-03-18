@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Photo Gallery | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Explore the official photo gallery of CLUBnoteKE. Highlights from our convoys, meets, and community events across Kenya.">
+    <meta property="og:title" content="Photo Gallery | CLUBnoteKE">
+    <meta property="og:description" content="See our fleet in action. Convoys, meets, and charity events.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/hero-wide-lineup.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/gallery.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Gallery",
+        "item": "https://clubnoteke.com/gallery.html"
+      }]
+    }
+    </script>
+    <style>
+        .gallery-section {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+        }
+        
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        [data-theme="dark"] .filter-btn {
+            border-color: rgba(255,255,255,0.15);
+            background: var(--card-bg);
+            color: var(--text-dark);
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-color);
+            color: #ffffff;
+            border-color: var(--accent-color);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-title {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .gallery-meta {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Lightbox (Basic CSS implementation) */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            padding: 2rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #lightbox.active { display: flex; }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+        .lightbox-caption {
+            color: white;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                        <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+            <button class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <img src="assets/hero-fleet.jpg" alt="Gallery header" class="page-header-bg" loading="lazy">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title">Fleet Gallery</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">Capturing the moments that define our club.</p>
+        </div>
+    </header>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="convoy">Convoys</button>
+                <button class="filter-btn" data-filter="meet">Meets</button>
+                <button class="filter-btn" data-filter="technical">Technical</button>
+                <button class="filter-btn" data-filter="community">Community</button>
+            </div>
+            
+            <div class="gallery-grid">
+                <!-- Item 1 -->
+                <div class="gallery-item" data-category="convoy">
+                    <img src="assets/gallery_tea_farm.jpg" alt="Limuru Tea Farm Drive" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Limuru Tea Farm Drive</h3>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="gallery-item" data-category="convoy">
+                    <img src="assets/gallery_parking_meet.jpg" alt="Namanga Road trip 1ST Anniversary" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Namanga Road trip 1ST Anniversary</h3>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="gallery-item" data-category="community">
+                    <img src="assets/soila_girls_charity.jpg" alt="SOILA GIRLS Charity Drive" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">SOILA GIRLS Charity Drive</h3>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="gallery-item" data-category="meet">
+                    <img src="assets/gallery_meet_major.jpg" alt="Official Club Shoot" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Official Club Shoot</h3>
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="gallery-item" data-category="technical">
+                    <img src="assets/settlers_resort.jpg" alt="Service & Maintenance Clinic" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Service & Maintenance Clinic</h3>
+                    </div>
+                </div>
+                
+                <!-- Item 6 -->
+                <div class="gallery-item" data-category="meet">
+                    <img src="assets/gallery_road_lineup.jpg" alt="Mt Ololokwe Road Trip" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Mt Ololokwe Road Trip</h3>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="gallery-item" data-category="convoy">
+                    <img src="assets/gallery_tigoni_drive.jpg" alt="Tigoni Drive" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Tigoni Fun Run</h3>
+                    </div>
+                </div>
+                
+                <!-- Item 8 -->
+                <div class="gallery-item" data-category="technical">
+                    <img src="assets/real-1.jpg" alt="Meet and Greet Kitengela" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Meet and Greet Kitengela</h3>
+                    </div>
+                </div>
+                
+                <!-- Item 9 -->
+                <div class="gallery-item" data-category="convoy">
+                    <img src="assets/gallery_convoy_line.jpg" alt="Road Trip" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Naivasha Road Trip</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img src="" alt="Enlarged view">
+        <div class="lightbox-caption">
+            <h3>Title Here</h3>
+            <p>Meta info here</p>
+        </div>
+    </div>
+
+
+    <!-- Submit Your Car -->
+    <section style="padding: 5rem 0; background: var(--primary-color);">
+        <div class="container">
+            <div style="max-width:700px;margin:0 auto;text-align:center;">
+                <span style="background:var(--gradient-accent);color:white;font-size:0.8rem;font-weight:700;padding:0.3rem 1rem;border-radius:50px;text-transform:uppercase;letter-spacing:1px;">Feature Your Car</span>
+                <h2 style="font-family:'Outfit';font-size:2.5rem;color:white;margin:1.5rem 0 1rem;">Submit Your Nissan Note</h2>
+                <p style="color:rgba(255,255,255,0.7);margin-bottom:2.5rem;font-size:1.05rem;">Think your car deserves a spot in the gallery? Submit your best photo and our team will review it for the next update.</p>
+
+                <form action="https://formspree.io/f/xwpbgnqo" method="POST" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:2.5rem;text-align:left;">
+                    <input type="hidden" name="_subject" value="CLUBnoteKE Gallery Photo Submission">
+                    <input type="hidden" name="_next" value="https://clubnoteke.com/gallery.html">
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;">
+                        <div>
+                            <label style="display:block;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:0.4rem;font-weight:500;">Your Name</label>
+                            <input type="text" name="Name" required placeholder="e.g. Kevin M." style="width:100%;padding:0.85rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-family:'Inter',sans-serif;font-size:0.95rem;">
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:0.4rem;font-weight:500;">Car Model &amp; Year</label>
+                            <input type="text" name="Car Model" required placeholder="e.g. E12 NISMO 2016" style="width:100%;padding:0.85rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-family:'Inter',sans-serif;font-size:0.95rem;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:1.2rem;">
+                        <label style="display:block;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:0.4rem;font-weight:500;">Photo Link (Google Drive, Dropbox, or Instagram post)</label>
+                        <input type="url" name="Photo Link" required placeholder="https://drive.google.com/..." style="width:100%;padding:0.85rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-family:'Inter',sans-serif;font-size:0.95rem;">
+                    </div>
+
+                    <div style="margin-bottom:2rem;">
+                        <label style="display:block;font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:0.4rem;font-weight:500;">Caption / Location (optional)</label>
+                        <input type="text" name="Caption" placeholder="e.g. Sunset at Naivasha" style="width:100%;padding:0.85rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:white;font-family:'Inter',sans-serif;font-size:0.95rem;">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width:100%;padding:1rem;font-size:1rem;">
+                        <i class="fa-solid fa-camera" style="margin-right:8px;"></i> Submit for Review
+                    </button>
+                    <p style="text-align:center;color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:1rem;">Photos are reviewed by our team before being added to the gallery.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Reused Footer -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = lightbox.querySelector('img');
+            const lightboxClose = lightbox.querySelector('.lightbox-close');
+            const lightboxTitle = lightbox.querySelector('.lightbox-caption h3');
+            const lightboxMeta = lightbox.querySelector('.lightbox-caption p');
+
+            // Filtering
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filterValue = btn.getAttribute('data-filter');
+                    
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Lightbox
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const img = item.querySelector('img');
+                    const title = item.querySelector('.gallery-title').innerText;
+                    const meta = item.querySelector('.gallery-meta').innerText;
+                    
+                    lightboxImg.src = img.src;
+                    lightboxTitle.innerText = title;
+                    lightboxMeta.innerText = meta;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>

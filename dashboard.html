@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Member Dashboard | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="CLUBnoteKE Member Dashboard - Access your digital ID and member-exclusive benefits.">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background-color: var(--bg-gray);
+            padding-top: var(--nav-height);
+        }
+
+        .dashboard-header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Digital ID Card */
+        .id-card-wrapper {
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .id-card-wrapper::before {
+            content: '\f21a';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.05;
+            bottom: -20px;
+            right: -20px;
+            transform: rotate(-15deg);
+        }
+
+        .id-logo {
+            font-family: 'Outfit';
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
+        }
+
+        .id-logo span { color: var(--accent-color); }
+        .id-logo i { color: var(--accent-color); margin-right: 0.5rem; }
+
+        .id-details { margin-bottom: 1.5rem; }
+        .id-label { font-size: 0.8rem; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; }
+        .id-value { font-size: 1.25rem; font-weight: 600; font-family: 'Outfit'; margin-bottom: 1rem; }
+        
+        .id-status {
+            display: inline-block;
+            background: rgba(37, 211, 102, 0.2);
+            color: #25d366;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+        }
+
+        /* V2 Dashboard Additions */
+        .progress-container {
+            margin-top: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 14px;
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color) 0%, #FFD700 100%);
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+
+        .id-card-content {
+            display: grid;
+            grid-template-columns: 1fr 140px;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .id-photo-area {
+            width: 140px;
+            height: 90px;
+            background: rgba(255,255,255,0.05);
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #9CA3AF;
+            transition: all 0.3s ease;
+        }
+
+        .id-photo-area:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent-color);
+        }
+
+        .id-photo-area i { font-size: 1.25rem; margin-bottom: 0.25rem; }
+
+        .news-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--bg-gray);
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .news-item:hover { transform: translateX(5px); }
+        .news-icon { font-size: 1.25rem; color: var(--accent-color); padding-top: 0.2rem; }
+        .news-content h4 { font-size: 1rem; margin-bottom: 0.2rem; }
+        .news-content p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Dashboard Panels */
+        .panel {
+            background: var(--bg-light);
+            background-image: var(--gradient-metallic);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .panel {
+            background-image: var(--gradient-dark-chrome);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+
+        /* Partner Discounts */
+        .discount-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .discount-item {
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .discount-item:hover {
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .discount-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(195, 0, 47, 0.1);
+            color: var(--accent-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .discount-info h4 { margin-bottom: 0.25rem; }
+        .discount-info p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+        .discount-code {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-gray);
+            padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--text-dark);
+            border: 1px dashed #CCC;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .discount-code:hover { border-color: var(--accent-color); }
+        .copy-btn {
+            background: none; border: none; cursor: pointer;
+            color: var(--text-muted); font-size: 0.75rem; padding: 0;
+            transition: color 0.2s;
+        }
+        .copy-btn:hover { color: var(--accent-color); }
+
+        /* Member Toolbox */
+        .toolbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-card {
+            background: var(--bg-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .tool-title {
+            font-size: 1rem;
+            font-family: 'Outfit';
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .tool-title i { color: var(--accent-color); }
+
+        .maint-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+
+        .maint-item:last-child { border-bottom: none; }
+
+        .maint-label { font-size: 0.85rem; color: var(--text-muted); }
+        .maint-date { font-weight: 600; font-size: 0.9rem; }
+        
+        .alert-badge {
+            background: #EF4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .calculator-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #DDD;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dtc-search-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .dtc-results {
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #EEE;
+            display: none;
+            padding: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .news-ticker-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(37,211,102,0.1);
+            color: #25d366;
+            border: 1px solid rgba(37,211,102,0.3);
+            padding: 0.2rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--bg-gray);
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .news-item:last-child { margin-bottom: 0; }
+        .news-item:hover { transform: translateX(5px); }
+        .news-icon { font-size: 1.25rem; color: var(--accent-color); padding-top: 0.2rem; flex-shrink: 0; }
+        .news-content h4 { font-size: 1rem; margin-bottom: 0.25rem; color: var(--text-dark); }
+        .news-content p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+        .news-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 50px;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .news-tag.event   { background: rgba(99,102,241,0.1); color: #6366F1; }
+        .news-tag.tip     { background: rgba(245,158,11,0.1); color: #F59E0B; }
+        .news-tag.alert   { background: rgba(239,68,68,0.1); color: #EF4444; }
+        .news-tag.partner { background: rgba(37,211,102,0.1); color: #25d366; }
+        .news-tag.club    { background: rgba(195,0,47,0.1); color: var(--accent-color); }
+        .news-tag.blog    { background: rgba(59,130,246,0.1); color: #3B82F6; }
+
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .discount-list, .toolbox-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Edit Profile Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 560px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem; right: 1.5rem;
+            background: none; border: none;
+            font-size: 1.4rem; cursor: pointer;
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+        }
+
+        .modal-close:hover { color: var(--accent-color); }
+
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+
+        .modal-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .photo-upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .car-photo-preview {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(0,0,0,0.08);
+            background: var(--bg-gray);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            border: 2px dashed #DDD;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background: var(--bg-gray);
+        }
+
+        .photo-placeholder:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .photo-placeholder i { font-size: 2rem; }
+
+        .profile-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .profile-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .profile-field label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-field input,
+        .profile-field select {
+            padding: 0.75rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            background: var(--card-bg);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        [data-theme="dark"] .profile-field input,
+        [data-theme="dark"] .profile-field select {
+            background: #1f1f1f;
+            border-color: rgba(255,255,255,0.12);
+            color: #F9FAFB;
+        }
+
+        .profile-field input:focus,
+        .profile-field select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(195,0,47,0.15);
+        }
+
+        [data-theme="dark"] .profile-field input:focus,
+        [data-theme="dark"] .profile-field select:focus {
+            background: #252525;
+        }
+
+        .profile-field.full-width { grid-column: span 2; }
+
+        .completion-preview {
+            background: var(--bg-gray);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .completion-preview .progress-container { flex: 1; }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Navigation (Logged In State) -->
+    <nav class="navbar scrolled">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <span style="color: white; font-weight: 500; display: inline-block;" id="nav-user-name"><i class="fa-solid fa-user-circle" style="margin-right:5px;opacity:0.7;"></i><span id="nav-first-name">Member</span></span>
+                <button onclick="clubnoteLogout()" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.9rem; border-color: rgba(255,255,255,0.3); color: white;">Sign Out</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <header class="dashboard-header reveal active">
+        <div class="container">
+            <div class="user-welcome" style="justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <div style="display:flex; align-items:center; gap:1.5rem;">
+                    <div class="user-avatar" id="avatarEl">?</div>
+                    <div>
+                        <h1 class="page-title" style="font-size: 2.5rem; text-shadow: none;"><span id="greeting-text">Welcome back</span>, <span id="welcome-name">Member</span>!</h1>
+                        <div style="display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <p style="opacity: 0.8; font-size: 1.1rem; margin: 0;">Profile Completeness:</p>
+                                <div style="width: 200px;">
+                                    <div class="progress-container">
+                                        <div id="profile-progress" class="progress-bar" style="width: 0%;"></div>
+                                </div>
+                                    </div>
+                                </div>
+                                <span id="progress-text" style="font-weight: 700;">0%</span>
+                            </div>
+                            <p id="profile-hint" style="font-size: 0.85rem; opacity: 0.7; margin: 0;">Loading your profile status...</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem; align-items:center;">
+                    <button type="button" class="btn btn-primary" onclick="openEditProfile()">
+                        <i class="fa-solid fa-user-pen" style="margin-right: 8px;"></i> Edit Profile
+                    </button>
+                    <button class="btn btn-outline" onclick="clubnoteLogout()" style="border-color: rgba(255,255,255,0.3); color: white;">
+                        <i class="fa-solid fa-right-from-bracket" style="margin-right: 8px;"></i> Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="container">
+        <div class="dashboard-grid">
+            
+            <!-- Left Column: ID Card -->
+            <div class="reveal-left active" style="transition-delay: 0s;">
+                <div class="id-card-wrapper">
+                    <div class="id-logo"><img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;"></div>
+                    
+                    <div class="id-card-content" style="display: block;">
+                        <div class="id-details">
+                            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem;">
+                                <div>
+                                    <div class="id-label">Member Name</div>
+                                    <div class="id-value" id="id-member-name" style="min-height:1.2em;"></div>
+                                </div>
+                                <div>
+                                    <div class="id-label">Vehicle Reg</div>
+                                    <div class="id-value" id="id-vehicle-reg" style="color: var(--accent-color);">KDA 123A</div>
+                                </div>
+                            </div>
+                            
+                            <div class="id-label">Member ID Number</div>
+                            <div class="id-value" id="id-member-number">CNK-2026-???</div>
+                            
+                            <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1rem;">
+                                <div>
+                                    <div class="id-label">Member Since</div>
+                                    <div class="id-value" style="font-size: 1.1rem;" id="id-join-date">March 2026</div>
+                                </div>
+                                <div>
+                                    <div class="id-label">Tier</div>
+                                    <div class="id-value" style="font-size: 1.1rem;" id="id-member-tier">Full Member</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                        <div>
+                            <div class="id-label">Expires</div>
+                            <div style="font-weight: 600; font-family: 'Outfit';">Dec 2026</div>
+                        </div>
+                        <div class="id-status"><i class="fa-solid fa-circle-check"></i> ACTIVE</div>
+                    </div>
+                </div>
+
+                <div class="panel" id="whatsapp-panel" style="margin-top: 2rem; background: var(--primary-color); color: white;">
+                    <h3 style="margin-bottom: 1rem;"><i class="fa-brands fa-whatsapp" ></i> Private Group</h3>
+                    <p id="whatsapp-desc" style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 1.5rem;">Access the verified members-only chat for instant help and banter.</p>
+                    <a href="https://wa.me/254736771402?text=Hello%20CLUBnoteKE%21%20I%20would%20like%20to%20join%20the%20member%20WhatsApp%20group." target="_blank" rel="noopener noreferrer" id="whatsapp-btn" class="btn btn-primary" style="width: 100%;">Join WhatsApp Chat <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 8px;"></i></a>
+                </div>
+
+                <div class="panel" style="margin-top: 2rem; background: #2D2D2D; color: white; border: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="margin-bottom: 1rem;"><i class="fa-solid fa-comments"></i> Online Forum</h3>
+                    <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 1.5rem;">Access years of archives, DIY guides, and technical discussions.</p>
+                    <a href="community.html" class="btn btn-outline" style="width: 100%; border-color: rgba(255,255,255,0.3); color: white;">Visit Forum Archives</a>
+                </div>
+            </div>
+
+            <!-- Right Column: Discounts & News -->
+            <div class="reveal-right active" style="transition-delay: 0s;">
+                
+                <!-- Discounts Panel -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fa-solid fa-tags" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Partner Garage Discounts</h2>
+                        <a href="know-your-car.html#partner-garages" style="font-size: 0.9rem; color: var(--accent-color); font-weight: 500;">View All Partners &rarr;</a>
+                    </div>
+                    
+                    <div class="discount-list">
+                        <div class="discount-item">
+                            <div class="discount-icon"><i class="fa-solid fa-oil-can"></i></div>
+                            <div class="discount-info">
+                                <h4>AutoExpress Nairobi</h4>
+                                <p>15% off synthetic oil changes and filters.</p>
+                                <span class="discount-code" onclick="copyCode('CODE: CNK-OIL-15', this)" title="Click to copy"><span>CODE: CNK-OIL-15</span><button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy"></i></button></span>
+                            </div>
+                        </div>
+                        <div class="discount-item">
+                            <div class="discount-icon"><i class="fa-solid fa-car-burst"></i></div>
+                            <div class="discount-info">
+                                <h4>Precision Bodyworks</h4>
+                                <p>10% off minor dent repairs and buffing.</p>
+                                <span class="discount-code">Show ID Card</span>
+                            </div>
+                        </div>
+                        <div class="discount-item">
+                            <div class="discount-icon"><i class="fa-solid fa-car-battery"></i></div>
+                            <div class="discount-info">
+                                <h4>Chloride Exide</h4>
+                                <p>Ksh 1,000 off any new battery purchase.</p>
+                                <span class="discount-code" onclick="copyCode('CODE: CNK-BATT', this)" title="Click to copy"><span>CODE: CNK-BATT</span><button class="copy-btn" aria-label="Copy code"><i class="fa-regular fa-copy"></i></button></span>
+                            </div>
+                        </div>
+                        <div class="discount-item">
+                            <div class="discount-icon"><i class="fa-solid fa-spray-can-sparkles"></i></div>
+                            <div class="discount-info">
+                                <h4>Extreme Detailers</h4>
+                                <p>20% off full interior detailing.</p>
+                                <span class="discount-code">Show ID Card</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- News Feed Panel -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fa-solid fa-bullhorn" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Club News Feed</h2>
+                        <span class="news-ticker-badge"><i class="fa-solid fa-circle" style="color:#25d366; font-size:0.5rem; margin-right:4px;"></i> Live</span>
+                    </div>
+                    <div id="news-feed-wrapper" style="transition: opacity 0.5s ease; min-height: 90px;">
+                        <!-- Single rotating news item injects here -->
+                    </div>
+                </div>
+
+                <!-- Member Toolbox Panel -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fa-solid fa-screwdriver-wrench" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Member Toolbox</h2>
+                    </div>
+                    <div class="toolbox-grid">
+                        <!-- Fuel Cost Calculator -->
+                        <div class="tool-card">
+                            <div class="tool-title"><i class="fa-solid fa-gas-pump"></i> Fuel Cost Calculator</div>
+                            <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">Distance (km)</label>
+                            <input type="number" id="fuel-km" class="calculator-input" placeholder="e.g. 150" min="0">
+                            <label style="font-size:0.8rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">Fuel Price (KES/L)</label>
+                            <input type="number" id="fuel-price" class="calculator-input" placeholder="e.g. 212" min="0">
+                            <div style="background:var(--bg-gray); border-radius:8px; padding:0.75rem; text-align:center; margin-top:0.5rem;">
+                                <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.2rem;">Estimated Cost</div>
+                                <div style="font-size:1.5rem; font-weight:800; font-family:'Outfit'; color:var(--accent-color);">KES <span id="fuel-result">0.00</span></div>
+                                <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.2rem;">Based on 14 km/L avg (Note E12)</div>
+                            </div>
+                        </div>
+                        <!-- Maintenance Logger -->
+                        <div class="tool-card">
+                            <div class="tool-title"><i class="fa-solid fa-calendar-check"></i> Maintenance Logger</div>
+                            <div class="maint-item">
+                                <div>
+                                    <div class="maint-label">Last Oil Change</div>
+                                    <input type="date" id="oil-date-input" class="calculator-input" style="margin:0.25rem 0 0; font-size:0.85rem;">
+                                </div>
+                                <span id="oil-alert" class="alert-badge" style="display:none;">DUE</span>
+                            </div>
+                            <div class="maint-item">
+                                <div>
+                                    <div class="maint-label">Insurance Expiry</div>
+                                    <input type="date" id="ins-date-input" class="calculator-input" style="margin:0.25rem 0 0; font-size:0.85rem;">
+                                </div>
+                                <span id="ins-alert" class="alert-badge" style="display:none;">DUE</span>
+                            </div>
+                            <button onclick="saveMaintenance()" class="btn btn-primary" style="width:100%; margin-top:1rem; padding:0.6rem;">
+                                <i class="fa-solid fa-floppy-disk" style="margin-right:6px;"></i> Save Records
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Garage Quick Link -->
+                <div class="panel" style="background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%); color: white; border: 1px solid rgba(255,255,255,0.08);">
+                    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+                        <div>
+                            <h3 style="font-family:'Outfit'; font-size:1.2rem; margin-bottom:0.4rem;"><i class="fa-solid fa-car-side" style="color:var(--accent-color); margin-right:0.6rem;"></i> My Digital Garage</h3>
+                            <p style="opacity:0.7; font-size:0.9rem; margin:0;">Track your car's service history, VIN, specs and next service countdown.</p>
+                        </div>
+                        <a href="garage.html" class="btn btn-primary" style="white-space:nowrap;">Open Garage <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal" onclick="if(event.target===this) this.classList.remove('active')">
+        <div class="modal-box">
+            <button class="modal-close" onclick="document.getElementById('editProfileModal').classList.remove('active')" aria-label="Close">&times;</button>
+            <h2 class="modal-title"><i class="fa-solid fa-id-card" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Edit Profile</h2>
+            <p class="modal-subtitle">Fill in all fields to reach 100% profile completeness.</p>
+
+            <!-- Car Photo Upload -->
+            <div class="photo-upload-area">
+                <div id="photoPlaceholder" class="photo-placeholder" onclick="document.getElementById('carPhotoInput').click()">
+                    <i class="fa-solid fa-camera"></i>
+                    <span style="font-size: 0.9rem; font-weight: 600;">Upload Car Photo</span>
+                    <span style="font-size: 0.75rem;">Click to browse (JPG / PNG)</span>
+                </div>
+                <img id="carPhotoPreview" class="car-photo-preview" style="display:none;" alt="Your Car">
+                <input type="file" id="carPhotoInput" accept="image/*" style="display:none;">
+                <button id="removePhotoBtn" style="display:none; background:none; border:none; color:var(--accent-color); font-size:0.85rem; cursor:pointer;" onclick="removeCarPhoto()"><i class="fa-solid fa-trash-can"></i> Remove Photo</button>
+            </div>
+
+            <!-- Profile Fields -->
+            <div class="profile-form-grid">
+                <div class="profile-field">
+                    <label>Full Name <span style="color:var(--accent-color);">*</span></label>
+                    <input type="text" id="ep-name" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="profile-field">
+                    <label>Phone (WhatsApp) <span style="color:var(--accent-color);">*</span></label>
+                    <input type="tel" id="ep-phone" placeholder="+254 7XX XXX XXX" required>
+                </div>
+                <div class="profile-field">
+                    <label>Vehicle Reg <span style="color:var(--accent-color);">*</span></label>
+                    <input type="text" id="ep-reg" placeholder="e.g. KDA 123A" style="text-transform:uppercase;" required>
+                </div>
+                <div class="profile-field">
+                    <label>Membership Tier</label>
+                    <select id="ep-tier">
+                        <option value="Supporter">Supporter (Free)</option>
+                        <option value="Full Member">Full Member</option>
+                        <option value="VIP">VIP / Sponsor</option>
+                    </select>
+                </div>
+                <div class="profile-field">
+                    <label>Car Model <span style="color:var(--accent-color);">*</span></label>
+                    <input type="text" id="ep-model" placeholder="e.g. Nissan Note E12 2015" required>
+                </div>
+                <div class="profile-field">
+                    <label>Car Colour <span style="color:var(--accent-color);">*</span></label>
+                    <input type="text" id="ep-colour" placeholder="e.g. Pearl White" required>
+                </div>
+                <div class="profile-field full-width">
+                    <label>Member Since (Join Date) <span style="color:var(--accent-color);">*</span></label>
+                    <input type="date" id="ep-joindate" required>
+                </div>
+            </div>
+
+            <!-- Live Completion Preview -->
+            <div class="completion-preview">
+                <i class="fa-solid fa-chart-pie" style="color: var(--accent-color); font-size: 1.5rem;"></i>
+                <div style="flex:1;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
+                        <span style="font-size:0.85rem; font-weight:600; color:var(--text-dark);">Profile Completeness</span>
+                        <span id="modal-progress-text" style="font-weight:700; color:var(--accent-color);">0%</span>
+                    </div>
+                    <div class="progress-container" style="background: var(--border-color);">
+                        <div id="modal-progress-bar" class="progress-bar" style="width:0%; transition: width 0.4s ease;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" style="width:100%; padding: 1rem; font-size: 1.05rem;" onclick="saveFullProfile()"><i class="fa-solid fa-floppy-disk" style="margin-right:8px;"></i> Save Profile</button>
+        </div>
+    </div>
+
+    <!-- Session Guard & Main JS -->
+    <script src="js/session-guard.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Dynamic Dashboard Logic V2
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get data from localStorage
+            const name = localStorage.getItem('clubnote_member_name') || 'Member';
+            const tier = localStorage.getItem('clubnote_membership_tier') || 'Supporter';
+            
+            // 1. Update Profile Completeness (Strict 4-Field Logic)
+            // Fields: Name (25%), Tier (25%), Join Date (25%), Vehicle Reg (25%)
+            let completion = 0;
+            const reg = localStorage.getItem('clubnote_vehicle_reg') || '';
+            const rawJoinDate = localStorage.getItem('clubnote_join_date');
+            
+            // Date Formatting Logic (e.g. "JAN 2024")
+            const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            let displayDate = "";
+            
+            if (rawJoinDate) {
+                const d = new Date(rawJoinDate);
+                displayDate = `MEMBER SINCE: ${months[d.getMonth()]} ${d.getFullYear()}`;
+            } else {
+                const now = new Date();
+                displayDate = `MEMBER SINCE: ${months[now.getMonth()]} ${now.getFullYear()}`;
+                // We don't save it yet, just fallback display
+            }
+
+            // Calculate Completion
+            if (name !== 'Member') completion += 25;
+            if (tier !== 'Supporter') completion += 25; // Paid tiers count
+            if (rawJoinDate) completion += 25;
+            if (reg.trim() !== '') completion += 25;
+            
+            const progressBar = document.getElementById('profile-progress');
+            const progressText = document.getElementById('progress-text');
+            const hintText = document.getElementById('profile-hint');
+            
+            if (progressBar) progressBar.style.width = completion + '%';
+            if (progressText) progressText.textContent = completion + '%';
+            
+            // Update Hint
+            if (hintText) {
+                if (completion === 100) {
+                    hintText.textContent = "Your profile is 100% complete. Drive safe!";
+                    hintText.style.color = "#25d366";
+                } else {
+                    let missing = [];
+                    if (name === 'Member') missing.push("name");
+                    if (tier === 'Supporter') missing.push("membership upgrade");
+                    if (!rawJoinDate) missing.push("registration date");
+                    if (reg.trim() === '') missing.push("vehicle registration");
+                    hintText.textContent = `Missing: ${missing.join(", ")}. Complete these to reach 100%.`;
+                }
+            }
+
+            // 2. Update Welcome Text with Name Greeting
+            const firstName = name !== 'Member' ? name.split(' ')[0] : 'Member';
+            const welcomeName = document.getElementById('welcome-name');
+            if (welcomeName) welcomeName.textContent = firstName;
+            const navFirstName = document.getElementById('nav-first-name');
+            if (navFirstName) navFirstName.textContent = firstName;
+
+            // Time-of-day greeting
+            const greetingEl = document.getElementById('greeting-text');
+            if (greetingEl) {
+                const h = new Date().getHours();
+                greetingEl.textContent = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+            }
+            
+            // 3. Update ID Card
+            const idName = document.getElementById('id-member-name');
+            const idTier = document.getElementById('id-member-tier');
+            const idJoin = document.getElementById('id-join-date');
+            const idReg = document.getElementById('id-vehicle-reg');
+            const avatar = document.querySelector('.user-avatar');
+            
+            if (idName) idName.textContent = name;
+            // Generate unique member ID from name hash
+            const idNumEl = document.getElementById('id-member-number');
+            if (idNumEl) {
+                let hash = 0;
+                const seed = name + 'clubnoteke2021';
+                for (let i = 0; i < seed.length; i++) {
+                    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+                    hash |= 0;
+                }
+                const idNum = String(Math.abs(hash) % 9000 + 1000).padStart(4, '0');
+                idNumEl.textContent = 'CNK-2026-' + idNum;
+            }
+            if (idTier) idTier.textContent = tier + ' Member';
+            if (idJoin) idJoin.textContent = displayDate;
+            if (idReg) idReg.textContent = reg || "NOT SET";
+            if (avatar) {
+                const initials = name === 'Member' ? '?' : name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+                avatar.textContent = initials;
+            }
+
+            // Sync reg input
+            const regInput = document.getElementById('reg-input');
+            if (regInput) regInput.value = reg;
+            
+            // 4. Update WhatsApp access based on Tier
+            const waPanel = document.getElementById('whatsapp-panel');
+            const waBtn = document.getElementById('whatsapp-btn');
+            const waDesc = document.getElementById('whatsapp-desc');
+            
+            if (tier === 'Supporter') {
+                // Locked state for Supporters
+                if (waPanel) waPanel.style.background = '#4B5563'; // Gray
+                if (waDesc) waDesc.textContent = 'Upgrade to Full Member to access the private WhatsApp group and car clinics.';
+                if (waBtn) {
+                    waBtn.innerHTML = 'Upgrade to Join <i class="fa-solid fa-lock" style="margin-left: 8px;"></i>';
+                    waBtn.href = 'membership.html#payment-info';
+                    waBtn.style.background = 'white';
+                    waBtn.style.color = '#111827';
+                }
+            } else {
+                // Active state for Full/VIP - Request Link via Admin
+                if (waBtn) {
+                    waBtn.innerHTML = 'Request Group Link <i class="fa-brands fa-whatsapp" style="margin-left: 8px;"></i>';
+                    const waText = encodeURIComponent(`Hello,\n\nMy name is ${name} and I'm registered as a ${tier}. Please find my M-Pesa transaction code below for verification. Kindly send me the private group link once confirmed.\n\nM-Pesa Code: [ENTER CODE HERE]\n\nAppreciate your help!`);
+                    waBtn.href = `https://wa.me/254736771402?text=${waText}`;
+                    waBtn.target = '_blank';
+                    waBtn.rel = 'noopener noreferrer';
+                }
+            if (waDesc) waDesc.textContent = 'To protect our community, the admin manually verifies all payments before sending the private group link.';
+            }
+
+            // --- Toolbox Logic ---
+
+            // A. Fuel Calculator
+            const fuelKm = document.getElementById('fuel-km');
+            const fuelPrice = document.getElementById('fuel-price');
+            const fuelResult = document.getElementById('fuel-result');
+
+            function calculateFuel() {
+                const km = parseFloat(fuelKm.value) || 0;
+                const price = parseFloat(fuelPrice.value) || 0;
+                const efficiency = 14; // Nissan Note Avg
+                const cost = (km / efficiency) * price;
+                fuelResult.textContent = cost.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                localStorage.setItem('clubnote_fuel_price', price);
+            }
+
+            if(fuelKm) fuelKm.addEventListener('input', calculateFuel);
+            if(fuelPrice) {
+                fuelPrice.value = localStorage.getItem('clubnote_fuel_price') || 212;
+                fuelPrice.addEventListener('input', calculateFuel);
+            }
+
+            // B. Maintenance Logger
+            const oilInput = document.getElementById('oil-date-input');
+            const insInput = document.getElementById('ins-date-input');
+            
+            // Load saved dates
+            if(oilInput) oilInput.value = localStorage.getItem('clubnote_maint_oil') || '';
+            if(insInput) insInput.value = localStorage.getItem('clubnote_maint_ins') || '';
+
+            // Check maintenance due dates and show alerts
+            function checkMaintAlerts() {
+                const now = new Date();
+                const oilVal = oilInput ? oilInput.value : '';
+                const insVal = insInput ? insInput.value : '';
+                const oilAlert = document.getElementById('oil-alert');
+                const insAlert = document.getElementById('ins-alert');
+                // Oil: due if last change was >3 months ago
+                if (oilVal && oilAlert) {
+                    const oilDate = new Date(oilVal);
+                    const monthsAgo = (now - oilDate) / (1000*60*60*24*30);
+                    oilAlert.style.display = monthsAgo > 3 ? 'inline-flex' : 'none';
+                }
+                // Insurance: due if expiry is within 30 days or past
+                if (insVal && insAlert) {
+                    const insDate = new Date(insVal);
+                    const daysLeft = (insDate - now) / (1000*60*60*24);
+                    insAlert.style.display = daysLeft < 30 ? 'inline-flex' : 'none';
+                    if (insAlert.style.display !== 'none') {
+                        insAlert.textContent = daysLeft < 0 ? 'EXPIRED' : 'DUE SOON';
+                    }
+                }
+            }
+            checkMaintAlerts();
+
+            window.saveMaintenance = function() {
+                localStorage.setItem('clubnote_maint_oil', oilInput.value);
+                localStorage.setItem('clubnote_maint_ins', insInput.value);
+                checkMaintAlerts();
+                // Toast notification instead of alert()
+                const toast = document.createElement('div');
+                toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:0.85rem 1.5rem;border-radius:10px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:0.5rem;';
+                toast.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#25d366;"></i> Maintenance records saved!';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3500);
+            };
+
+            // ── Full Profile Editor Modal Logic ──────────────────────────────
+
+
+             // Car photo — load saved on page init
+             (function() {
+                 var savedPhoto = localStorage.getItem('clubnote_car_photo');
+                 if (savedPhoto) {
+                     document.getElementById('carPhotoPreview').src = savedPhoto;
+                     document.getElementById('carPhotoPreview').style.display = 'block';
+                     document.getElementById('photoPlaceholder').style.display = 'none';
+                     document.getElementById('removePhotoBtn').style.display = 'inline-block';
+                 }
+             })();
+
+             document.getElementById('carPhotoInput').addEventListener('change', function() {
+                 const file = this.files[0];
+                 if (!file) return;
+                 const reader = new FileReader();
+                 reader.onload = function(e) {
+                     const preview = document.getElementById('carPhotoPreview');
+                     const placeholder = document.getElementById('photoPlaceholder');
+                     preview.src = e.target.result;
+                     preview.style.display = 'block';
+                     placeholder.style.display = 'none';
+                     document.getElementById('removePhotoBtn').style.display = 'inline-block';
+                     updateModalProgress();
+                 };
+                 reader.readAsDataURL(file);
+             });
+
+             window.removeCarPhoto = function() {
+                 document.getElementById('carPhotoPreview').style.display = 'none';
+                 document.getElementById('photoPlaceholder').style.display = 'flex';
+                 document.getElementById('removePhotoBtn').style.display = 'none';
+                 document.getElementById('carPhotoInput').value = '';
+                 updateModalProgress();
+             };
+
+             // Always reads fresh from DOM — no stale closure variables
+             function getModalCompletion() {
+                 var fields = [
+                     (document.getElementById('ep-name')     || {value:''}).value.trim(),
+                     (document.getElementById('ep-phone')    || {value:''}).value.trim(),
+                     (document.getElementById('ep-reg')      || {value:''}).value.trim(),
+                     (document.getElementById('ep-joindate') || {value:''}).value.trim(),
+                     (document.getElementById('ep-model')    || {value:''}).value.trim(),
+                     (document.getElementById('ep-colour')   || {value:''}).value.trim(),
+                     document.getElementById('carPhotoPreview').style.display !== 'none' ? 'photo' : ''
+                 ];
+                 return Math.round((fields.filter(Boolean).length / fields.length) * 100);
+             }
+
+             function updateModalProgress() {
+                 var pct = getModalCompletion();
+                 var bar = document.getElementById('modal-progress-bar');
+                 var txt = document.getElementById('modal-progress-text');
+                 if (bar) bar.style.width = pct + '%';
+                 if (txt) txt.textContent = pct + '%';
+             }
+
+             // Attach live progress listeners
+             ['ep-name','ep-phone','ep-reg','ep-model','ep-colour','ep-joindate'].forEach(function(id) {
+                 var el = document.getElementById(id);
+                 if (el) el.addEventListener('input', updateModalProgress);
+             });
+             var epTierEl = document.getElementById('ep-tier');
+             if (epTierEl) epTierEl.addEventListener('change', updateModalProgress);
+
+            window.openEditProfile = function() {
+                // Re-read from localStorage every time modal opens (ensures fresh data)
+                var n  = document.getElementById('ep-name');
+                var ph = document.getElementById('ep-phone');
+                var rg = document.getElementById('ep-reg');
+                var ti = document.getElementById('ep-tier');
+                var mo = document.getElementById('ep-model');
+                var co = document.getElementById('ep-colour');
+                var jd = document.getElementById('ep-joindate');
+
+                if (n)  n.value  = localStorage.getItem('clubnote_member_name') || '';
+                if (ph) ph.value = localStorage.getItem('clubnote_phone') || '';
+                if (rg) rg.value = (localStorage.getItem('clubnote_vehicle_reg') || '').toUpperCase();
+                if (ti) ti.value = localStorage.getItem('clubnote_membership_tier') || 'Supporter';
+                if (mo) mo.value = localStorage.getItem('clubnote_car_model') || '';
+                if (co) co.value = localStorage.getItem('clubnote_car_colour') || '';
+                if (jd) {
+                    var saved = localStorage.getItem('clubnote_join_date');
+                    jd.value = saved ? new Date(saved).toISOString().split('T')[0] : '';
+                }
+
+                // Clear any leftover error state from previous open
+                var errEl = document.getElementById('profile-save-error');
+                if (errEl) errEl.remove();
+                [n, ph, rg, mo, co, jd].forEach(function(el) {
+                    if (el) { el.style.borderColor = ''; el.style.boxShadow = ''; }
+                });
+
+                updateModalProgress();
+                document.getElementById('editProfileModal').classList.add('active');
+            };
+
+            window.saveFullProfile = function() {
+                // Always read fresh from DOM — never rely on closure vars
+                const fName     = document.getElementById('ep-name');
+                const fPhone    = document.getElementById('ep-phone');
+                const fReg      = document.getElementById('ep-reg');
+                const fTier     = document.getElementById('ep-tier');
+                const fModel    = document.getElementById('ep-model');
+                const fColour   = document.getElementById('ep-colour');
+                const fJoindate = document.getElementById('ep-joindate');
+
+                // Clear previous error states
+                [fName, fPhone, fReg, fModel, fColour, fJoindate].forEach(function(el) {
+                    if (el) {
+                        el.style.borderColor = '';
+                        el.style.boxShadow = '';
+                    }
+                });
+
+                // Validate required fields
+                const required = [
+                    { el: fName,     label: 'Full Name' },
+                    { el: fPhone,    label: 'Phone (WhatsApp)' },
+                    { el: fReg,      label: 'Vehicle Registration' },
+                    { el: fModel,    label: 'Car Model' },
+                    { el: fColour,   label: 'Car Colour' },
+                    { el: fJoindate, label: 'Member Since (Join Date)' },
+                ];
+
+                const missing = required.filter(function(r) {
+                    return r.el && !r.el.value.trim();
+                });
+
+                if (missing.length > 0) {
+                    // Highlight missing fields in red
+                    missing.forEach(function(r) {
+                        r.el.style.borderColor = 'var(--accent-color)';
+                        r.el.style.boxShadow = '0 0 0 3px rgba(195,0,47,0.2)';
+                        r.el.focus();
+                    });
+                    // Show inline error message
+                    var errEl = document.getElementById('profile-save-error');
+                    if (!errEl) {
+                        errEl = document.createElement('div');
+                        errEl.id = 'profile-save-error';
+                        errEl.style.cssText = 'background:rgba(195,0,47,0.1);border:1px solid rgba(195,0,47,0.3);border-radius:10px;padding:0.75rem 1rem;margin-top:1rem;font-size:0.88rem;color:var(--accent-color);text-align:center;';
+                        var saveBtn = document.querySelector('#editProfileModal .btn-primary');
+                        if (saveBtn) saveBtn.insertAdjacentElement('afterend', errEl);
+                    }
+                    errEl.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-right:6px;"></i>' +
+                        'Please fill in: <strong>' + missing.map(function(r){ return r.label; }).join(', ') + '</strong>';
+                    // Focus on first missing field
+                    missing[0].el.focus();
+                    return; // Stop — do not save
+                }
+
+                // All required fields present — clear any error
+                var errEl = document.getElementById('profile-save-error');
+                if (errEl) errEl.remove();
+
+                // Save everything to localStorage
+                localStorage.setItem('clubnote_member_name',      fName.value.trim());
+                localStorage.setItem('clubnote_phone',             fPhone.value.trim());
+                localStorage.setItem('clubnote_vehicle_reg',       fReg.value.toUpperCase().trim());
+                localStorage.setItem('clubnote_membership_tier',   fTier.value);
+                localStorage.setItem('clubnote_car_model',         fModel.value.trim());
+                localStorage.setItem('clubnote_car_colour',        fColour.value.trim());
+                localStorage.setItem('clubnote_join_date',         new Date(fJoindate.value).toISOString());
+
+                // Car photo
+                const preview = document.getElementById('carPhotoPreview');
+                if (preview && preview.style.display !== 'none' && preview.src && preview.src !== window.location.href) {
+                    localStorage.setItem('clubnote_car_photo', preview.src);
+                } else {
+                    localStorage.removeItem('clubnote_car_photo');
+                }
+
+                // Close modal
+                document.getElementById('editProfileModal').classList.remove('active');
+
+                // Show success toast then reload
+                const toast = document.createElement('div');
+                toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:0.85rem 1.5rem;border-radius:10px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.3);display:flex;align-items:center;gap:0.5rem;';
+                toast.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#25d366;"></i> Profile saved successfully!';
+                document.body.appendChild(toast);
+                setTimeout(function() { location.reload(); }, 1200);
+            };
+
+
+            // ── Curated News Feed with 10-second Shuffle ────────────────────
+            const allNews = [
+                // ── Events ─────────────────────────────────────────────────
+                { icon:"fa-flag-checkered", tag:"event", tagLabel:"Event",
+                  title:"Grand Tour — May 1–3, Western Kenya",
+                  desc:"Our biggest convoy of 2026 is confirmed! 3 days, 600km, 40+ cars. Registration is open — only 12 slots left." },
+                { icon:"fa-calendar-check", tag:"event", tagLabel:"Event",
+                  title:"Naivasha Sunday Drive — April 20th",
+                  desc:"A relaxed one-day drive to Hell's Gate and back. Family-friendly, no speed pressure. RSVP to secure your spot." },
+                { icon:"fa-people-group", tag:"event", tagLabel:"Event",
+                  title:"Prayer Day & Family Meet — June TBC",
+                  desc:"Wholesome day out with your loved ones. Venue around Thogoto. Date confirmation coming soon on WhatsApp." },
+                { icon:"fa-cake-candles", tag:"event", tagLabel:"Event",
+                  title:"Anniversary Celebration — July 2026",
+                  desc:"CLUBnoteKE turns 5! We are planning something big. Watch the community board for the grand venue announcement." },
+                { icon:"fa-route", tag:"event", tagLabel:"Event",
+                  title:"Vaibu Run — October TBC",
+                  desc:"Fast-paced, high-energy drive for the more spirited members. Route and date dropping soon. Members only." },
+                { icon:"fa-gift", tag:"event", tagLabel:"Event",
+                  title:"End-of-Year Charity Bash — December",
+                  desc:"Awards, dinner, charity drive all in one night. Our biggest end-of-year event yet. Details dropping in November." },
+                { icon:"fa-map-location-dot", tag:"event", tagLabel:"Past Event",
+                  title:"Recap: Narok Meet & Greet — Feb 28",
+                  desc:"What a turnout! 35 members, incredible food, and one very loud exhaust competition. Gallery photos now live." },
+                { icon:"fa-car-burst", tag:"event", tagLabel:"Car Clinic",
+                  title:"Free Car Check Day — Date TBC",
+                  desc:"Partner mechanics will inspect your Note for free — brakes, tyres, fluids, lights. RSVP required. Venue: Westlands." },
+
+                // ── Technical Tips ──────────────────────────────────────────
+                { icon:"fa-wrench", tag:"tip", tagLabel:"Car Tip",
+                  title:"CVT Fluid: The Forgotten Service",
+                  desc:"Most garages skip this. Nissan Note CVT fluid must be changed every 40,000 km. Neglect it and you face a KES 180,000 gearbox rebuild." },
+                { icon:"fa-oil-can", tag:"tip", tagLabel:"Car Tip",
+                  title:"Best Engine Oil for the HR12DE",
+                  desc:"Use 0W-20 full synthetic. The DIG-S engine is precision-built — thick oil starves it on cold starts. Shell Helix Ultra or Castrol Edge recommended." },
+                { icon:"fa-droplet", tag:"tip", tagLabel:"Car Tip",
+                  title:"Brake Fluid Goes Dark — Here's Why",
+                  desc:"Brake fluid absorbs moisture over time, lowering its boiling point. If yours is brown rather than golden, change it now. DOT 3 or DOT 4 only." },
+                { icon:"fa-battery-full", tag:"tip", tagLabel:"Car Tip",
+                  title:"Battery Terminal Corrosion Fix",
+                  desc:"White powder on your terminals? Mix baking soda and warm water, scrub gently with an old toothbrush, rinse and dry. Takes 5 minutes, prevents no-starts." },
+                { icon:"fa-gauge-high", tag:"tip", tagLabel:"Car Tip",
+                  title:"Correct Tyre Pressure for the Note",
+                  desc:"E11: 220 kPa front, 210 kPa rear. E12: 230 kPa all round. Check cold, never hot. Under-inflated tyres increase fuel consumption by up to 3%." },
+                { icon:"fa-snowflake", tag:"tip", tagLabel:"Car Tip",
+                  title:"AC Smells Musty? Do This",
+                  desc:"Turn AC off 2 minutes before arriving at your destination and run the fan on fresh air. This dries the evaporator and kills mould. Free fix." },
+                { icon:"fa-triangle-exclamation", tag:"tip", tagLabel:"Car Tip",
+                  title:"E11 Air Intake Water Risk",
+                  desc:"The E11 intake sits low. Never drive through water deeper than the bottom of your doors — hydro-lock kills engines instantly and isn't covered by insurance." },
+                { icon:"fa-road", tag:"tip", tagLabel:"Car Tip",
+                  title:"Pothole Damage: What to Check After",
+                  desc:"After a bad pothole hit, check: tyre sidewall bulge, wheel alignment pull, suspension clunk over bumps. Early detection saves thousands." },
+                { icon:"fa-bolt", tag:"tip", tagLabel:"Car Tip",
+                  title:"Idling Stop System Acting Up?",
+                  desc:"If your ISS stops working, the battery is likely below 80% charge. Drive on the highway for 30 minutes to recharge, or get the battery tested." },
+                { icon:"fa-screwdriver-wrench", tag:"tip", tagLabel:"Car Tip",
+                  title:"DIY: Replacing Cabin Air Filter",
+                  desc:"Open the glove box, press the sides to release, pull it out. A fresh filter costs KES 800 and takes 5 minutes. Do it every 15,000 km." },
+                { icon:"fa-circle-check", tag:"tip", tagLabel:"Car Tip",
+                  title:"Check Your Wheel Bolts Monthly",
+                  desc:"Especially after any tyre change. Loose bolts cause vibration above 80kph and in extreme cases, wheel separation. Torque spec: 108 Nm." },
+                { icon:"fa-gas-pump", tag:"tip", tagLabel:"Fuel Tip",
+                  title:"Best Petrol Stations for the Note",
+                  desc:"Stick to Shell V-Power, Total Excellium, or Kenol. Avoid unknown roadside stations — adulterated fuel clogs injectors on the HR12DE especially." },
+                { icon:"fa-car-side", tag:"tip", tagLabel:"Car Tip",
+                  title:"When to Change Your Timing Chain",
+                  desc:"The HR15DE has a chain, not a belt — it's designed to last the engine's life. BUT listen for rattle on cold start: that's a tensioner warning." },
+                { icon:"fa-wind", tag:"tip", tagLabel:"Car Tip",
+                  title:"Wiper Blades: Don't Wait for Rain",
+                  desc:"Replace wiper blades every 12 months regardless of use. UV degrades rubber silently. A smearing wiper in a Nairobi downpour is genuinely dangerous." },
+                { icon:"fa-thermometer-half", tag:"tip", tagLabel:"Car Tip",
+                  title:"Coolant Level: Check Monthly",
+                  desc:"The E12 reservoir is at the back of the engine bay. Should be between MIN and MAX lines. If it keeps dropping, get the radiator cap and hoses checked." },
+
+                // ── Club News ──────────────────────────────────────────────
+                { icon:"fa-star", tag:"club", tagLabel:"Milestone",
+                  title:"CLUBnoteKE Hits 1,200 Members! 🎉",
+                  desc:"We have officially crossed 1,200 registered members. You are part of Kenya's largest single-model car club. The road ahead is bright!" },
+                { icon:"fa-trophy", tag:"club", tagLabel:"Member Spotlight",
+                  title:"Member of the Month: @NoteKing254",
+                  desc:"Kevin's NISMO build photos from the Rift Valley drive are simply stunning. Check the Builds page and drop a comment on Instagram." },
+                { icon:"fa-trophy", tag:"club", tagLabel:"Member Spotlight",
+                  title:"Spotlight: Barbra N. — The Wrapped E11",
+                  desc:"Barbra's matte bronze wrap is turning heads across Nairobi. She'll be sharing the full build story on the blog this month." },
+                { icon:"fa-handshake", tag:"club", tagLabel:"Club Update",
+                  title:"CLUBnoteKE Is Now Officially Registered",
+                  desc:"We are a fully registered entity in Kenya. Our certificate number is on the About page. This unlocks real partnerships and sponsorships." },
+                { icon:"fa-people-carry-box", tag:"club", tagLabel:"Charity",
+                  title:"Mombasa Charity Drive Raised KES 100,000",
+                  desc:"Our coastal convoy wasn't just about the drive. We donated KES 100,000 to the Salvation Army Children's Home. Proud of this community." },
+                { icon:"fa-people-carry-box", tag:"club", tagLabel:"Charity",
+                  title:"Kisumu Drive: KES 120,000 for Education",
+                  desc:"Western Kenya outreach complete. Funds go to primary school uniforms and books in Kisumu. Details and photos on the Charity page." },
+                { icon:"fa-map-pin", tag:"club", tagLabel:"Club Update",
+                  title:"We Now Have Members in 15 Counties",
+                  desc:"From Mombasa to Kisumu, Eldoret to Nairobi — CLUBnoteKE has a member near you. Regional convoy groups launching soon." },
+                { icon:"fa-mobile-screen", tag:"club", tagLabel:"Club Update",
+                  title:"New Club Website Is Live!",
+                  desc:"Welcome to the new CLUBnoteKE website! Dashboard, digital garage, news feed, gallery — all yours as a member. Report any bugs via WhatsApp." },
+                { icon:"fa-circle-user", tag:"club", tagLabel:"Club Update",
+                  title:"Digital Member IDs Are Now Active",
+                  desc:"Your CNK-2026 ID is unique to you and generated from your name. Show it at partner garages for your member discount. No printout needed." },
+                { icon:"fa-shield-halved", tag:"club", tagLabel:"Club Update",
+                  title:"Member Insurance Negotiations Underway",
+                  desc:"We're in talks with two insurers for a group motor insurance rate for Note owners. Updates coming in Q2 2026. Watch this space." },
+
+                // ── Partners & Discounts ────────────────────────────────────
+                { icon:"fa-handshake", tag:"partner", tagLabel:"Partner",
+                  title:"Precision Auto Westlands — 15% Off Diagnostics",
+                  desc:"Show your digital member ID at Precision Auto on Chiromo Road. 15% off full diagnostic scans. Valid until June 30, 2026." },
+                { icon:"fa-handshake", tag:"partner", tagLabel:"Partner",
+                  title:"AutoExpress Nairobi — Synthetic Oil Discount",
+                  desc:"Members get 15% off every synthetic oil change at AutoExpress. Use code CNK-OIL-15 at the counter. Valid Monday–Saturday." },
+                { icon:"fa-handshake", tag:"partner", tagLabel:"Partner",
+                  title:"Sparkle Car Wash — Members Pay Half",
+                  desc:"Full valet for KES 1,200 (regular KES 2,400) at all three Sparkle locations. Show your member ID on your phone. No printout needed." },
+                { icon:"fa-handshake", tag:"partner", tagLabel:"Partner",
+                  title:"Insight Auto Services — OEM Parts at Cost",
+                  desc:"Insight on Northern Bypass supplies genuine Nissan Note parts to club members at close-to-cost pricing. Call ahead and mention CLUBnoteKE." },
+                { icon:"fa-handshake", tag:"partner", tagLabel:"Partner",
+                  title:"Battery Centre Kenya — 10% Off All Batteries",
+                  desc:"OEM and aftermarket batteries for the Note at 10% member discount. Free installation included. Use code CNK-BATT at checkout." },
+                { icon:"fa-handshake", tag:"partner", tagLabel:"New Partner",
+                  title:"TyreKing Nairobi — Members Get Priority Fitting",
+                  desc:"New partnership alert! TyreKing on Mombasa Road offers priority tyre fitting with no queuing for CLUBnoteKE members. ID required." },
+
+                // ── Alerts & Reminders ──────────────────────────────────────
+                { icon:"fa-cloud-rain", tag:"alert", tagLabel:"Seasonal Alert",
+                  title:"Long Rains Checklist — Act Now",
+                  desc:"Wipers, tyre tread, brake fluid, battery terminals, air intake seal. Five checks that take 20 minutes and prevent a KES 50,000 breakdown." },
+                { icon:"fa-sun", tag:"alert", tagLabel:"Seasonal Alert",
+                  title:"Dry Season Warning: Coolant Check",
+                  desc:"The July–September dry heat pushes coolant systems hard. Check your reservoir level and inspect hoses for cracking before temperatures peak." },
+                { icon:"fa-triangle-exclamation", tag:"alert", tagLabel:"Safety Alert",
+                  title:"Counterfeit CVT Fluid Warning",
+                  desc:"Fake NISSAN Matic-S fluid has been spotted in Nairobi markets. Buy from authorised dealers only. Counterfeit fluid destroys the CVT in under 10,000 km." },
+                { icon:"fa-file-contract", tag:"alert", tagLabel:"Reminder",
+                  title:"Insurance Renewal Season — Check Your Date",
+                  desc:"Many members joined in January. Your annual insurance may be due. Use the maintenance logger on your dashboard to track expiry dates." },
+                { icon:"fa-id-card", tag:"alert", tagLabel:"Reminder",
+                  title:"Update Your Profile to 100%",
+                  desc:"Members with complete profiles get first access to event RSVPs and partner discounts. Take 2 minutes to fill in your details now." },
+                { icon:"fa-triangle-exclamation", tag:"alert", tagLabel:"Safety",
+                  title:"Night Driving: Check Your Headlamps",
+                  desc:"E11 projector lenses cloud over time and reduce visibility by up to 40%. Polishing kits cost KES 1,500 and take 30 minutes. Worth every shilling." },
+
+                // ── Blog & Learning ─────────────────────────────────────────
+                { icon:"fa-book-open", tag:"blog", tagLabel:"New Article",
+                  title:"Why the HR12DE Engine Is Bulletproof",
+                  desc:"Our technical lead breaks down the engineering behind the HR12DE's legendary reliability — and exactly what you must not skip to keep it that way." },
+                { icon:"fa-book-open", tag:"blog", tagLabel:"New Article",
+                  title:"Rainy Season Prep Guide — Full Checklist",
+                  desc:"5 maintenance checks, a bonus packing list, and the one thing every E11 owner must inspect before the rains hit. Full article now live on the blog." },
+                { icon:"fa-book-open", tag:"blog", tagLabel:"New Article",
+                  title:"E13 e-POWER in Kenya: Is It Worth It?",
+                  desc:"We drove the E13 for 2 weeks on Nairobi roads. Fuel figures, ride quality, dealer availability — all the honest answers. Read it on the blog." },
+                { icon:"fa-book-open", tag:"blog", tagLabel:"New Article",
+                  title:"How to Negotiate Better Car Insurance in Kenya",
+                  desc:"Most people pay 30% more than they should. Our member guide covers comparison tools, broker tricks, and what to say to get a lower quote." },
+                { icon:"fa-book-open", tag:"blog", tagLabel:"New Article",
+                  title:"Navigating the Highlands in a Convoy",
+                  desc:"Technical roads, altitude changes, and 18 Notes in formation. Our Samburu convoy write-up is live with tips for high-altitude driving." },
+                { icon:"fa-book-open", tag:"blog", tagLabel:"Coming Soon",
+                  title:"Build Guide: Upgrading Your Note's Suspension",
+                  desc:"Coilovers, lowering springs, strut braces — what's worth the money in Kenya. Full guide dropping next week. Subscribe on WhatsApp for the alert." },
+                { icon:"fa-lightbulb", tag:"blog", tagLabel:"Did You Know?",
+                  title:"The Note E12 NISMO Has a Sport-Tuned CVT",
+                  desc:"The NISMO variant has a different CVT mapping that holds revs longer under acceleration. It's subtle but measurable — about 0.4 seconds to 100kph faster." },
+                { icon:"fa-lightbulb", tag:"blog", tagLabel:"Did You Know?",
+                  title:"Your Note Can Run on 91 RON Petrol",
+                  desc:"The HR12DE and HR15DE are tuned for 91 RON minimum. Using 95 or 97 won't damage the engine but gives negligible benefit on these naturally aspirated units." },
+                { icon:"fa-lightbulb", tag:"blog", tagLabel:"Did You Know?",
+                  title:"The DIG-S Engine Has a Supercharger, Not a Turbo",
+                  desc:"The 1.2 DIG-S uses an on-demand supercharger using the Miller Cycle. It kicks in under hard acceleration and shuts off at cruise — that's the slight surge you feel." },
+                { icon:"fa-lightbulb", tag:"blog", tagLabel:"Did You Know?",
+                  title:"Note E-POWER Is Not a Plug-In Hybrid",
+                  desc:"The e-POWER system charges itself from the petrol engine — you never plug it in. The petrol engine only drives a generator; the wheels are 100% electric." },
+
+                // ── Community ──────────────────────────────────────────────
+                { icon:"fa-comments", tag:"club", tagLabel:"Community",
+                  title:"Parts Marketplace Is Now Live",
+                  desc:"Buy, sell, or swap genuine Nissan Note parts with verified club members. Check the Community page — new listings added weekly." },
+                { icon:"fa-camera", tag:"club", tagLabel:"Community",
+                  title:"Submit Your Car to the Gallery",
+                  desc:"Think your Note deserves a spot? Head to the Gallery page and submit your best photo. Our team reviews every submission within 48 hours." },
+                { icon:"fa-car-side", tag:"club", tagLabel:"Community",
+                  title:"Member Builds Page Is Up",
+                  desc:"Three featured builds are live — Kevin's NISMO, James's Red Devil respray, and Barbra's bronze E11 wrap. Want yours featured? WhatsApp us." },
+                { icon:"fa-share-nodes", tag:"club", tagLabel:"Community",
+                  title:"Refer a Friend — Grow the Family",
+                  desc:"Know a Note owner who hasn't joined? Send them the membership link. A bigger club means better convoy photos, more parts discounts, and more road trips." },
+                { icon:"fa-comments", tag:"club", tagLabel:"Community",
+                  title:"WhatsApp Group Etiquette Reminder",
+                  desc:"Keep posts relevant — technical help, events, parts, photos. No politics, no spam. Offenders are quietly removed. Keep the vibe clean." },
+                { icon:"fa-hashtag", tag:"club", tagLabel:"Social",
+                  title:"Tag Your Photos #CLUBnoteKE",
+                  desc:"Every convoy photo, every sunrise shot, every maintenance win — tag it. Best tagged photos get featured on the website and our Instagram stories." }
+            ];
+
+            const feedWrapper = document.getElementById('news-feed-wrapper');
+            let newsIndex = 0;
+
+            function renderNews(item) {
+                feedWrapper.innerHTML = `
+                    <div class="news-item" style="margin-bottom:0;">
+                        <div class="news-icon"><i class="fa-solid ${item.icon}"></i></div>
+                        <div class="news-content">
+                            <span class="news-tag ${item.tag}">${item.tagLabel}</span>
+                            <h4>${item.title}</h4>
+                            <p>${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+                feedWrapper.style.opacity = '1';
+            }
+
+            function showNextNews() {
+                if (!feedWrapper) return;
+                const item = allNews[newsIndex % allNews.length];
+                feedWrapper.style.transition = 'opacity 0.4s ease';
+                feedWrapper.style.opacity = '0';
+                setTimeout(() => {
+                    renderNews(item);
+                    newsIndex++;
+                }, 400);
+            }
+
+            // Shuffle once then show first item IMMEDIATELY (no fade delay on load)
+            allNews.sort(() => Math.random() - 0.5);
+            if (feedWrapper) {
+                feedWrapper.style.opacity = '1';
+                renderNews(allNews[0]);
+                newsIndex = 1;
+            }
+            let newsInterval = setInterval(showNextNews, 10000);
+
+            // Pause rotation on hover so users can read
+            if (feedWrapper) {
+                feedWrapper.addEventListener('mouseenter', () => clearInterval(newsInterval));
+                feedWrapper.addEventListener('mouseleave', () => {
+                    newsInterval = setInterval(showNextNews, 10000);
+                });
+            }
+        });
+
+            window.copyCode = function(code, el) {
+                navigator.clipboard.writeText(code).then(() => {
+                    const orig = el.querySelector('span').textContent;
+                    el.querySelector('span').textContent = 'Copied!';
+                    el.style.borderColor = '#25d366';
+                    el.style.color = '#25d366';
+                    setTimeout(() => {
+                        el.querySelector('span').textContent = orig;
+                        el.style.borderColor = '';
+                        el.style.color = '';
+                    }, 1500);
+                });
+            };
+        });
+    </script>
+
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>

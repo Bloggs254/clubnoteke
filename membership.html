@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Membership | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Join CLUBnoteKE today. View our membership tiers, benefits, and register online to become part of the Nissan Note family in Kenya.">
+    <meta property="og:title" content="Membership | CLUBnoteKE">
+    <meta property="og:description" content="Join CLUBnoteKE today. View our membership tiers, benefits, and register online.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/club_logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/membership.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Membership",
+        "item": "https://clubnoteke.com/membership.html"
+      }]
+    }
+    </script>
+    <style>
+        .pricing {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+            background-image: radial-gradient(rgba(195, 0, 47, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .pricing-card {
+            background: var(--bg-light);
+            background-image: var(--gradient-metallic);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Adjusted for glassmorphism consistency */
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-card.glass-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        .pricing-card.featured {
+            border-color: rgba(195, 0, 47, 0.3);
+            background-image: linear-gradient(145deg, rgba(195, 0, 47, 0.05) 0%, rgba(195, 0, 47, 0.01) 100%), var(--gradient-metallic);
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(195, 0, 47, 0.15);
+        }
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+        [data-theme="dark"] .pricing-card {
+            background-image: var(--gradient-dark-chrome);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+        [data-theme="dark"] .pricing-card.featured {
+            background-image: linear-gradient(145deg, rgba(195, 0, 47, 0.15) 0%, rgba(195, 0, 47, 0.02) 100%), var(--gradient-dark-chrome);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+        }
+        .tier-name {
+            font-family: 'Outfit';
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .tier-price {
+            font-size: 3rem;
+            font-family: 'Outfit';
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        .tier-price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .tier-desc {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .tier-features {
+            text-align: left;
+            margin-bottom: 2.5rem;
+        }
+        .tier-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-dark);
+        }
+        .tier-features i {
+            color: var(--accent-color);
+        }
+        
+        .registration {
+            padding: 6rem 0;
+            background-color: var(--bg-gray);
+            background-image: 
+                radial-gradient(rgba(26, 26, 26, 0.03) 2px, transparent 2px),
+                radial-gradient(rgba(26, 26, 26, 0.03) 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .form-container.glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(195, 0, 47, 0.1);
+        }
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231A1A1A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat, repeat;
+            background-position: right .7em top 50%, 0 0;
+            background-size: .65em auto, 100%;
+        }
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .pricing-card.featured { transform: none; }
+            .pricing-card.featured:hover { transform: translateY(-5px); }
+        }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Membership",
+        "item": "https://clubnoteke.com/membership.html"
+      }]
+    }
+    </script>
+</head>
+<body>
+    <script>
+        // If user already has an active session, send them to their dashboard
+        try {
+            const s = JSON.parse(localStorage.getItem('clubnote_session'));
+            if (s && s.token && Date.now() < s.expiry) {
+                window.location.replace('dashboard.html');
+            }
+        } catch(e) {}
+    </script>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" loading="lazy" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html" class="active">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn" style="position: static;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <img src="assets/hero-bg.jpg" alt="Car Keys" class="page-header-bg">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title reveal active">Join the Club</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">Unlock exclusive benefits and join our growing family.</p>
+        </div>
+    </header>
+
+    <!-- Pricing / Tiers -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle text-gradient">Tiers</span>
+                <h2 class="section-title">Membership Options</h2>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Free Tier -->
+                <div class="pricing-card reveal" style="transition-delay: 0s;">
+                    <h3 class="tier-name">Supporter</h3>
+                    <div class="tier-price">Free <span>/ forever</span></div>
+                    <p class="tier-desc">For enthusiasts who want to stay updated with club news.</p>
+                    <ul class="tier-features">
+                        <li><i class="fa-solid fa-check"></i> Basic forum access</li>
+                        <li><i class="fa-solid fa-check"></i> Monthly newsletter</li>
+                        <li><i class="fa-solid fa-check"></i> Public event invites</li>
+                        <li ><i class="fa-solid fa-xmark"></i> No club merchandise</li>
+                        <li ><i class="fa-solid fa-xmark"></i> No partner discounts</li>
+                    </ul>
+                    <a href="#register" class="btn btn-outline" style="width: 100%; color: var(--primary-color); border-color: var(--primary-color);">Sign Up Free</a>
+                </div>
+                
+                <!-- Premium Tier -->
+                <div class="pricing-card featured reveal" style="transition-delay: 0.2s;">
+                    <div class="badge">POPULAR</div>
+                    <h3 class="tier-name">Full Member</h3>
+                    <div class="tier-price">KES 750 <span>/ year</span></div>
+                    <p class="tier-desc">The complete CLUBnoteKE experience for verified owners.</p>
+                    <ul class="tier-features">
+                        <li><i class="fa-solid fa-check"></i> Private WhatsApp group access</li>
+                        <li><i class="fa-solid fa-check"></i> Official Membership Number</li>
+                        <li><i class="fa-solid fa-check"></i> 2 Exclusive Club Stickers</li>
+                        <li><i class="fa-solid fa-check"></i> 10-20% off at partner garages</li>
+                        <li><i class="fa-solid fa-check"></i> VIP parking at events</li>
+                        <li><i class="fa-solid fa-check"></i> Full 'Know Your Car' guide access</li>
+                    </ul>
+                    <a href="#register" class="btn btn-primary" style="width: 100%;">Become a Member</a>
+                </div>
+                
+                <!-- VIP Tier -->
+                <div class="pricing-card reveal" style="transition-delay: 0.4s;">
+                    <h3 class="tier-name">VIP / Sponsor</h3>
+                    <div class="tier-price">KES 10,000 <span>/ year</span></div>
+                    <p class="tier-desc">For die-hard fans and local business owners supporting the club.</p>
+                    <ul class="tier-features">
+                        <li><i class="fa-solid fa-check"></i> All Full Member benefits</li>
+                        <li><i class="fa-solid fa-check"></i> Premium club merchandise pack</li>
+                        <li><i class="fa-solid fa-check"></i> Free entry to all paid events</li>
+                        <li><i class="fa-solid fa-check"></i> Business promotion in newsletter</li>
+                        <li><i class="fa-solid fa-check"></i> Direct line to technical lead</li>
+                    </ul>
+                    <a href="#register" class="btn btn-dark" style="width: 100%;">Join as VIP</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section id="register" class="registration">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle text-gradient">Application</span>
+                <h2 class="section-title">Membership Registration</h2>
+                <p style="color: var(--text-muted);">Fill out the form below to begin your application process.</p>
+            </div>
+            
+            <div class="form-container glass-card reveal" style="transition-delay: 0.1s;">
+                <form id="membershipForm" action="https://formspree.io/f/xwpbgnqo" method="POST">
+                    <input type="hidden" name="_next" value="https://clubnoteke.com/thankyou.html">
+                    <input type="hidden" name="_subject" value="New CLUBnoteKE Membership Application">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="fname">First Name</label>
+                            <input type="text" id="fname" name="First Name" class="form-control" required placeholder="e.g. John">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lname">Last Name</label>
+                            <input type="text" id="lname" name="Last Name" class="form-control" required placeholder="e.g. Doe">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" id="email" name="Email" class="form-control" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number (WhatsApp)</label>
+                            <input type="tel" id="phone" name="Phone" class="form-control" required placeholder="+254 736 771 402">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="carmodel">Nissan Note Model/Year</label>
+                            <input type="text" id="carmodel" name="Car Model" class="form-control" required placeholder="e.g. E12 2015">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="tier">Select Membership Tier</label>
+                            <select id="tier" name="Membership Tier" class="form-control" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="free">Supporter (Free)</option>
+                                <option value="full">Full Member (KES 750/yr)</option>
+                                <option value="vip">VIP (KES 10,000/yr)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="reason">Why do you want to join?</label>
+                        <textarea id="reason" name="Reason for Joining" class="form-control" rows="4" placeholder="Tell us a bit about yourself and your car..."></textarea>
+                    </div>
+
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <button type="submit" class="btn btn-primary btn-lg" style="padding: 1rem 3rem; font-size: 1.1rem;">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Information -->
+    <section id="payment-info" class="features" style="background-color: var(--bg-gray); padding: 5rem 0;">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle text-gradient">Upgrade</span>
+                <h2 class="section-title">How to Pay</h2>
+                <p style="color: var(--text-muted);">To complete your Full Member or VIP registration, please follow these steps.</p>
+            </div>
+            
+            <div style="max-width: 600px; margin: 0 auto; background: var(--card-bg); padding: 2.5rem; border-radius: 16px; box-shadow: var(--shadow-sm); border-top: 5px solid var(--accent-color);">
+                <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div style="width: 60px; height: 60px; background: #25d366; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <div>
+                        <h3 style="margin: 0; font-family: 'Outfit'; color: var(--text-dark);">M-Pesa (Send Money)</h3>
+                        <p style="margin: 0; color: var(--text-muted);">Instant activation via our official line.</p>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-gray); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;">
+                        <span style="color: var(--text-muted);">Recipient Name:</span>
+                        <span style="font-weight: 700; color: var(--text-dark);">Chartyn Maenga</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-muted);">Phone Number:</span>
+                        <span style="font-weight: 700; color: var(--accent-color);">+254 736 771 402</span>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 2rem;">
+                    <p><strong>Step 1:</strong> Send the registration fee (KES 750 for Full Member or KES 10,000 for VIP) via M-Pesa to the number above.</p>
+                    <p style="margin-top: 1rem;"><strong>Step 2:</strong> Once the payment is confirmed, click the button below to send your <strong>Transaction Code</strong> to our admin via WhatsApp. <strong>The group link will be shared after manual verification.</strong></p>
+                </div>
+
+                <a href="https://wa.me/254736771402?text=Hello!%20I%20have%20just%20completed%20my%20CLUBnoteKE%20payment.%20My%20Transaction%20Code%20is%3A%20[ENTER%20CODE%20HERE]" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center;" rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp" style="margin-right: 10px;"></i> Send Confirmation Message
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Refer a Friend -->
+    <section style="padding: 5rem 0; background: var(--bg-light);">
+        <div class="container">
+            <div style="max-width:700px;margin:0 auto;text-align:center;">
+                <span class="section-subtitle text-gradient">Grow the Family</span>
+                <h2 class="section-title" style="margin-top:0.5rem;">Refer a Fellow Note Owner</h2>
+                <p style="color:var(--text-muted);margin-bottom:2.5rem;">Know someone with a Nissan Note? Invite them. A bigger club means better convoy photos, more buying power on parts, and more voices keeping the community alive.</p>
+
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:2.5rem;">
+                    <div style="background:var(--bg-gray);border-radius:16px;padding:1.5rem;text-align:center;">
+                        <i class="fa-solid fa-share-nodes" style="font-size:2rem;color:var(--accent-color);margin-bottom:1rem;display:block;"></i>
+                        <h4 style="font-family:'Outfit';color:var(--text-dark);margin-bottom:0.5rem;">Share the Link</h4>
+                        <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Send them directly to this page</p>
+                    </div>
+                    <div style="background:var(--bg-gray);border-radius:16px;padding:1.5rem;text-align:center;">
+                        <i class="fa-brands fa-whatsapp" style="font-size:2rem;color:#25d366;margin-bottom:1rem;display:block;"></i>
+                        <h4 style="font-family:'Outfit';color:var(--text-dark);margin-bottom:0.5rem;">WhatsApp Invite</h4>
+                        <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Send a pre-written invite message</p>
+                    </div>
+                    <div style="background:var(--bg-gray);border-radius:16px;padding:1.5rem;text-align:center;">
+                        <i class="fa-brands fa-instagram" style="font-size:2rem;color:#E1306C;margin-bottom:1rem;display:block;"></i>
+                        <h4 style="font-family:'Outfit';color:var(--text-dark);margin-bottom:0.5rem;">Tag on Instagram</h4>
+                        <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Tag them on our latest post</p>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                    <a href="https://wa.me/?text=Hey!%20I'm%20part%20of%20CLUBnoteKE%20-%20Kenya's%20premier%20Nissan%20Note%20club.%20If%20you%20own%20a%20Nissan%20Note%2C%20you%20need%20to%20join%20us!%20Road%20trips%2C%20car%20clinics%2C%20parts%20discounts%20and%20the%20best%20community%20on%20Kenyan%20roads.%20Check%20it%20out%3A%20https%3A%2F%2Fclubnoteke.com%2Fmembership.html"
+                       target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <i class="fa-brands fa-whatsapp" style="margin-right:8px;"></i> Send WhatsApp Invite
+                    </a>
+                    <button onclick="navigator.clipboard.writeText('https://clubnoteke.com/membership.html').then(function(){var b=document.getElementById('copy-link-btn');b.innerHTML='<i class=\'fa-solid fa-check\' style=\'margin-right:8px;\'></i> Copied!';setTimeout(function(){b.innerHTML='<i class=\'fa-solid fa-link\' style=\'margin-right:8px;\'></i> Copy Link';},2000);})" id="copy-link-btn" class="btn btn-dark">
+                        <i class="fa-solid fa-link" style="margin-right:8px;"></i> Copy Link
+                    </button>
+                    <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color:var(--text-dark);border-color:var(--border-color);">
+                        <i class="fa-brands fa-instagram" style="margin-right:8px;"></i> Our Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <script>
+        // Additional Logic for Membership Page
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('membershipForm');
+            if (form) {
+                form.addEventListener('submit', () => {
+                    const tier = document.getElementById('tier').value;
+                    const fname = document.getElementById('fname').value;
+                    const lname = document.getElementById('lname').value;
+                    
+                    // Save to local storage for the dashboard
+                    const tierLabel = tier === 'free' ? 'Supporter' : (tier === 'full' ? 'Full Member' : 'VIP');
+                    localStorage.setItem('clubnote_membership_tier', tierLabel);
+                    localStorage.setItem('clubnote_member_name', `${fname} ${lname}`);
+
+                    // Create Session for immediate access
+                    const session = {
+                        token: 'CNK-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                        expiry: Date.now() + (7 * 24 * 60 * 60 * 1000), // 7 days
+                        lastActive: Date.now()
+                    };
+                    localStorage.setItem('clubnote_session', JSON.stringify(session));
+                });
+            }
+        });
+    </script>
+</body>
+</html>

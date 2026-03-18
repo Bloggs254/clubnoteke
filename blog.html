@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Club News & Blog | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Stay updated with the latest news, event recaps, and featured stories from CLUBnoteKE.">
+    <meta property="og:title" content="Club News & Blog | CLUBnoteKE">
+    <meta property="og:description" content="Read CLUBnoteKE blog posts on Nissan Note maintenance, road trips, and club news.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/club_logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/blog.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://clubnoteke.com/blog.html"
+      }]
+    }
+    </script>
+    <style>
+        .blog-section {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+        }
+        
+        /* Featured Post */
+        .featured-post {
+            display: flex;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Adjusted for glassmorphism consistency */
+        }
+        .featured-post.glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .featured-img {
+            width: 55%;
+            object-fit: cover;
+        }
+        .featured-content {
+            width: 45%;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .post-category {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+        .featured-title {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .post-excerpt {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        .post-meta img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .meta-author-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .meta-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        
+        /* Recent Posts Grid */
+        .recent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--bg-gray);
+        }
+        .recent-header h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: transform var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+        .blog-card-img {
+            aspect-ratio: 16 / 7;
+            width: 100%;
+            object-fit: cover;
+        }
+        .blog-card-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card-title {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        .blog-card-excerpt {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        /* Sidebar (Pagination Placeholder) */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 5rem;
+        }
+        .page-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: var(--bg-gray);
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+        .page-link:hover, .page-link.active {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        @media (max-width: 900px) {
+            .featured-post { flex-direction: column; }
+            .featured-img { width: 100%; height: 350px; }
+            .featured-content { width: 100%; padding: 2.5rem; }
+            .featured-title { font-size: 2rem; }
+        }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                        <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <img src="assets/meet.jpg" alt="News and blog" class="page-header-bg" loading="lazy">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title reveal active">Club News & Articles</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">Read about our latest road trips, technical insights, and member stories.</p>
+        </div>
+    </header>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            
+            <!-- Featured Post -->
+            <article class="featured-post glass-card">
+                <img src="assets/soila_girls_charity.jpg" alt="Soila Girls Charity Drive Recap" class="featured-img" loading="lazy" style="object-position: center 25%;">
+                <div class="featured-content">
+                    <span class="post-category">Community Impact</span>
+                    <h2 class="featured-title">Empowering the Future: Soila Girls Charity Drive</h2>
+                    <p class="post-excerpt">Our visit to Soila was more than just a drive; it was a mission of hope. Thanks to the overwhelming support of our members, we raised <strong>KES 190,000</strong> to provide essential supplies and mentorship. Here's a look at the day's highlights and the impact we made together.</p>
+                    
+                    <div class="post-meta">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Admin" loading="lazy">
+                        <div class="meta-author-info">
+                            <span>Admin Team</span>
+                            <span class="meta-date">March 12, 2026</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <a href="charity.html" class="btn btn-primary">Read Full Recap</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Recent Posts -->
+            <div class="recent-header">
+                <h2 style="font-family: 'Outfit';">Recent Articles</h2>
+                <div class="search-bar" style="margin: 0; max-width: 300px;">
+                    <input type="text" class="form-control" placeholder="Search blog..." style="border-radius: 50px; padding-left: 1.5rem;">
+                </div>
+            </div>
+            
+            <div class="blog-grid-page" id="page-1" style="display: block;">
+                <div class="blog-grid">
+                    <!-- Post 1 -->
+                    <article class="blog-card glass-card">
+                        <img src="assets/convoy.jpg" alt="Car Maintenance" class="blog-card-img" loading="lazy" style="object-position: center 90%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">Technical</span>
+                            <h3 class="blog-card-title"><a href="blog-rainy-season.html" style="color:inherit;text-decoration:none;">Preparing Your Note for the Long Rains</a></h3>
+                            <p class="blog-card-excerpt">As the rainy season approaches in Kenya, here are 5 crucial maintenance checks you need to perform on your E11 or E12 to ensure your safety and avoid getting stranded.</p>
+                            <a href="blog-rainy-season.html" class="btn btn-outline" style="color:var(--accent-color);border-color:var(--accent-color);margin-top:1rem;font-size:0.85rem;">Read Article <i class="fa-solid fa-arrow-right" style="margin-left:4px;"></i></a>
+                            
+                            <div class="post-meta" style="margin-bottom: 0; margin-top: auto;">
+                                <div class="meta-author-info">
+                                    <span>Michael W.</span>
+                                    <span class="meta-date">Feb 28, 2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Post 2 -->
+                    <article class="blog-card">
+                        <img src="assets/nissan_note_e13.png" alt="Nissan Note E13 e-POWER" class="blog-card-img" loading="lazy" style="object-position: center 55%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">Industry News</span>
+                            <h3 class="blog-card-title">The Nissan Note E13 e-POWER: A New Era in Kenya</h3>
+                            <p class="blog-card-excerpt">The third-generation Note has made its mark in Kenya. With its innovative e-POWER hybrid system, the E13 offers an electric driving experience with 1.2L efficiency, achieving up to 28 km/L on our roads.</p>
+                            
+                            <div class="post-meta" style="margin-bottom: 0; margin-top: auto;">
+                                <div class="meta-author-info">
+                                    <span>James K.</span>
+                                    <span class="meta-date">Feb 20, 2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Post 3 -->
+                    <article class="blog-card">
+                        <img src="assets/mombasa_charity.jpg" alt="Mombasa Charity Drive" class="blog-card-img" loading="lazy" style="object-position: center 42%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">Community</span>
+                            <h3 class="blog-card-title">Coastal Outreach: Mombasa Charity Drive</h3>
+                            <p class="blog-card-excerpt">Our regional tour to the coast wasn't just about the drive. We stopped at the Salvation Army Mombasa Children's Home, raising <strong>KES 100,000</strong> for local aid.</p>
+                            
+                            <div class="post-meta" style="margin-bottom: 0; margin-top: auto;">
+                                <div class="meta-author-info">
+                                    <span>Events Team</span>
+                                    <span class="meta-date">Jan 15, 2026</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Page 2 -->
+            <div class="blog-grid-page" id="page-2" style="display: none;">
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <img src="assets/real-1.jpg" alt="Road Trip" class="blog-card-img" loading="lazy" style="object-position: center 45%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">Community</span>
+                            <h3 class="blog-card-title">Navigating the Highlands in a Convoy</h3>
+                            <p class="blog-card-excerpt">A brief recap of our recent 20-car convoy up to the highlands and the scenic routes we covered.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="assets/kisumu_charity.jpg" alt="Kisumu Drive" class="blog-card-img" loading="lazy" style="object-position: center 35%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">Community</span>
+                            <h3 class="blog-card-title">Kisumu Outreach: Helping the Highlands</h3>
+                            <p class="blog-card-excerpt">A recap of our visit to Western Kenya where we raised <strong>KES 120,000</strong> for children's welfare and education in Kisumu.</p>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <img src="assets/real-5.jpg" alt="Clinic" class="blog-card-img" loading="lazy" style="object-position: center 60%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">Event</span>
+                            <h3 class="blog-card-title">Annual General Meeting 2025 Retrospective</h3>
+                            <p class="blog-card-excerpt">A look back at the key decisions and leadership announcements from last year's AGM.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- Page 3 -->
+            <div class="blog-grid-page" id="page-3" style="display: none;">
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <img src="assets/fleet_savanna.jpg" alt="Evolution of Nissan Note" class="blog-card-img" loading="lazy" style="object-position: center 80%;">
+                        <div class="blog-card-content">
+                            <span class="post-category">History</span>
+                            <h3 class="blog-card-title">The Evolution of the Nissan Note</h3>
+                            <p class="blog-card-excerpt">A dive into the generations of the Nissan Note, from the E11 to the latest e-Power models.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="page-link active" onclick="return false;">1</a>
+                <a href="#" class="page-link" onclick="return false;">2</a>
+                <a href="#" class="page-link" onclick="return false;">3</a>
+                <span class="page-link" style="background: transparent;">...</span>
+                <a href="#" class="page-link" onclick="return false;"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Reused Footer -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pageLinks = document.querySelectorAll('.pagination .page-link:not(span)');
+            const pages = document.querySelectorAll('.blog-grid-page');
+            
+            pageLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (link.innerHTML.includes('fa-chevron-right')) return;
+                    
+                    const pageNum = link.innerText.trim();
+                    
+                    document.querySelectorAll('.pagination .page-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    pages.forEach(p => p.style.display = 'none');
+                    const targetPage = document.getElementById('page-' + pageNum);
+                    if(targetPage) {
+                        targetPage.style.display = 'block';
+                    }
+                });
+            });
+        });
+
+    </script>
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>

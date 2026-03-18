@@ -1,0 +1,204 @@
+/* Gallery-specific styles for Uniform Grid Overhaul */
+.gallery-section {
+    padding: 6rem 0;
+    background-color: var(--bg-light);
+}
+
+/* Filter Buttons */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.filter-btn {
+    padding: 0.6rem 1.8rem;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--text-dark);
+    border-radius: 50px;
+    font-family: 'Outfit';
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary-color);
+    color: var(--text-light);
+    box-shadow: 0 4px 15px rgba(234, 183, 56, 0.3);
+}
+
+/* Uniform Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 1.5rem 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.gallery-item {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    opacity: 0;
+    transform: translateY(30px);
+    aspect-ratio: 4 / 3; /* Ensures all items are the same height */
+}
+
+.gallery-item.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Spotlight Effect */
+.gallery-item.spotlight {
+    box-shadow: 0 0 25px var(--primary-color), 0 0 10px rgba(255, 255, 255, 0.5);
+    z-index: 10;
+    transform: scale(1.02);
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crucial for uniform grid with varying source images */
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 3rem 1.5rem 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 40%, transparent 100%);
+    color: var(--text-light);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+.gallery-item:hover .image-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.image-overlay h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.image-overlay p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+}
+
+/* Living Gallery shuffling animation */
+.gallery-item.shuffling {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+}
+
+/* Lightbox Styles */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.98);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    backdrop-filter: blur(10px);
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 12px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    transform: scale(0.8);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lightbox.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #fff;
+    font-size: 44px;
+    cursor: pointer;
+    z-index: 2101;
+    transition: 0.3s;
+}
+
+.lightbox-close:hover {
+    transform: rotate(90deg);
+    color: var(--primary-color);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+    .gallery-grid {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+    .gallery-item {
+        aspect-ratio: 16 / 10; /* Slightly wider on mobile/tablet */
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    .filter-btn {
+        padding: 0.4rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}

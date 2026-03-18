@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>CLUBnoteKE — Kenya's Premier Nissan Note Club</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Welcome to CLUBnoteKE, the official Nissan Note car club in Kenya founded in 2021. Join our community for events, car tips, and networking.">
+    <meta property="og:title" content="CLUBnoteKE — Kenya's Premier Nissan Note Club">
+    <meta property="og:description" content="Welcome to CLUBnoteKE, Kenya's fastest growing Nissan Note community. Join for events, car tips, and networking.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/hero-wide-lineup.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="index, follow">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      }]
+    }
+    </script>
+    <style>
+        /* Page Loader */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            background: #111111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #page-loader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-logo {
+            width: 72px;
+            height: 72px;
+            animation: loaderSpin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: brightness(0) invert(1);
+        }
+        @keyframes loaderSpin {
+            0%   { transform: rotate(0deg) scale(1); }
+            50%  { transform: rotate(180deg) scale(1.12); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Hero entrance animations */
+        .hero-subtitle,
+        .hero-title,
+        .hero-desc,
+        .hero-buttons {
+            opacity: 0;
+            transform: translateY(32px);
+        }
+        .hero-content.animate .hero-subtitle {
+            animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+        }
+        .hero-content.animate .hero-title {
+            animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+        }
+        .hero-content.animate .hero-desc {
+            animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
+        }
+        .hero-content.animate .hero-buttons {
+            animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
+        }
+        @keyframes heroFadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll dissolve */
+        .hero-content {
+            transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+            will-change: opacity, transform;
+        }
+    </style>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <img src="assets/club_logo.png" alt="Loading..." class="loader-logo">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" loading="lazy" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn" style="position: static;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="parallaxHero">
+        <img src="assets/hero-wide-lineup.jpg" alt="Grand Lineup of Nissan Note Fleet" class="hero-bg" id="heroBg">
+        <div class="container relative z-10">
+            <div class="hero-content">
+                <span class="hero-subtitle">Est. 2021 • Kenya</span>
+                <h1 class="hero-title">Experience the Joy of <span class="text-gradient">Driving</span> Together.</h1>
+                <p class="hero-desc">Join CLUBnoteKE, Kenya's most passionate community of Nissan Note owners and enthusiasts. Discover exclusive events, expert maintenance tips, and a family that shares your passion.</p>
+                <div class="hero-buttons">
+                    <a href="membership.html" class="btn btn-primary">Join the Club <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
+                    <a href="events.html" class="btn btn-outline">Upcoming Events</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card reveal" style="transition-delay: 0s;">
+                    <div class="stat-number"><span class="counter" data-target="5">5</span>+</div>
+                    <div class="stat-label">Years Active</div>
+                </div>
+                <div class="stat-card reveal" style="transition-delay: 0.1s;">
+                    <div class="stat-number"><span class="counter" data-target="1200">1200</span>+</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-card reveal" style="transition-delay: 0.2s;">
+                    <div class="stat-number"><span class="counter" data-target="50">50</span>+</div>
+                    <div class="stat-label">Events Hosted</div>
+                </div>
+                <div class="stat-card reveal" style="transition-delay: 0.3s;">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support & Advice</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Preview -->
+    <section class="about-preview">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image reveal-left">
+                    <img src="assets/fleet_highlands.jpg" alt="CLUBnoteKE Fleet in Kenya Highlands" loading="lazy">
+                </div>
+                <div class="about-content reveal-right">
+                    <span class="section-subtitle text-gradient">Our Story</span>
+                    <h2>More Than Just a Car Club. It's a <span class="text-gradient">Family.</span></h2>
+                    <p>Founded in 2021, CLUBnoteKE started with a small group of passionate Nissan Note owners who wanted to share their experiences and help each other with car maintenance in Kenya.</p>
+                    <p>Today, we have grown into a vibrant community that celebrates the versatility and reliability of the Nissan Note through road trips, charity drives, and technical workshops.</p>
+                    
+                    <ul class="about-points">
+                        <li><i class="fa-solid fa-circle-check"></i> Expert mechanical advice and trusted garages.</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Monthly meetups and scenic road trips across Kenya.</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Exclusive discounts on spare parts and servicing.</li>
+                    </ul>
+                    
+                    <a href="about.html" class="btn btn-dark" style="margin-top: 1rem;">Read Full Story</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle text-gradient">What We Offer</span>
+                <h2 class="section-title">Explore Member Benefits</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal" style="transition-delay: 0s;">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                    <h3 class="feature-title">Know Your Car</h3>
+                    <p class="feature-desc">Access our comprehensive guides on Nissan Note maintenance, common issues, troubleshooting, and tips from certified mechanics.</p>
+                    <a href="know-your-car.html" class="btn btn-outline" style="color: var(--accent-color); border-color: var(--accent-color);">View Guides</a>
+                </div>
+                <div class="feature-card reveal" style="transition-delay: 0.1s;">
+                    <div class="feature-icon">
+                        <i class="fa-regular fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Exclusive Events</h3>
+                    <p class="feature-desc">Join us for exhilarating road trips, car clinics, and social gatherings. Build lasting friendships with fellow petrolheads.</p>
+                    <a href="events.html" class="btn btn-outline" style="color: var(--accent-color); border-color: var(--accent-color);">View Calendar</a>
+                </div>
+                <div class="feature-card reveal" style="transition-delay: 0.2s;">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Vibrant Community</h3>
+                    <p class="feature-desc">Engage in discussions, ask questions, and share your car modification projects in our active member forums and WhatsApp groups.</p>
+                    <a href="community.html" class="btn btn-outline" style="color: var(--accent-color); border-color: var(--accent-color);">Join Community</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Scrolling Marquee -->
+    <section class="partners-marquee" style="background-color: var(--primary-color); padding: 2rem 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <div class="marquee-content" style="display: inline-block; animation: marqueeScroll 25s linear infinite;">
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-star" style="color: var(--accent-color); margin-right: 10px;"></i> Insight Auto Services - Official Main Garage</span>
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-handshake" style="color: var(--accent-color); margin-right: 10px;"></i> Noted Hearts - Official Club Partnership</span>
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-star" style="color: var(--accent-color); margin-right: 10px;"></i> Insight Auto Services - Official Main Garage</span>
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-handshake" style="color: var(--accent-color); margin-right: 10px;"></i> Noted Hearts - Official Club Partnership</span>
+        </div>
+        <div class="marquee-content" style="display: inline-block; animation: marqueeScroll 25s linear infinite;">
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-star" style="color: var(--accent-color); margin-right: 10px;"></i> Insight Auto Services - Official Main Garage</span>
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-handshake" style="color: var(--accent-color); margin-right: 10px;"></i> Noted Hearts - Official Club Partnership</span>
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-star" style="color: var(--accent-color); margin-right: 10px;"></i> Insight Auto Services - Official Main Garage</span>
+            <span class="marquee-item" style="color: var(--text-light); font-size: 1.2rem; margin: 0 4rem; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-handshake" style="color: var(--accent-color); margin-right: 10px;"></i> Noted Hearts - Official Club Partnership</span>
+        </div>
+    </section>
+
+
+    <!-- Testimonials -->
+    <section style="padding: 6rem 0; background-color: var(--bg-light);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle text-gradient">Real Members</span>
+                <h2 class="section-title">What Our Members Say</h2>
+            </div>
+            <div style="position:relative; max-width: 760px; margin: 0 auto; min-height: 180px;">
+                <div class="testimonial-slider-container">
+
+                    <div class="testimonial-slide active">
+                        <div class="t-quote"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="t-text">"CLUBnoteKE changed how I see my Note. I've done 4 road trips, learned to service my own car, and made friends I'll keep for life. Best KES 750 I've ever spent."</p>
+                        <div class="t-author">
+                            <h4>Kevin M.</h4>
+                            <p>Full Member since 2022 · Nissan Note E12 NISMO</p>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="t-quote"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="t-text">"I was struggling to find reliable mechanics who actually know the Note. Through the club I found Insight Auto, saved money on parts, and haven't had a breakdown since."</p>
+                        <div class="t-author">
+                            <h4>Barbra N.</h4>
+                            <p>Full Member since 2023 · Nissan Note E11</p>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="t-quote"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="t-text">"The Mombasa convoy was a dream come true. 40 Notes rolling in together — I've never felt more part of something special. Already counting down to the next one."</p>
+                        <div class="t-author">
+                            <h4>Chartyn W.</h4>
+                            <p>VIP Member · Nissan Note E13 e-POWER</p>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="t-quote"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="t-text">"I posted about a weird noise in my CVT at midnight. By 7am I had three detailed responses, a mechanic recommendation, and a discount code. That's what community looks like."</p>
+                        <div class="t-author">
+                            <h4>James K.</h4>
+                            <p>Full Member since 2023 · Nissan Note E12</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="slider-controls">
+                    <button class="slide-btn" id="prevBtn" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="slider-dots" id="sliderDots"></div>
+                    <button class="slide-btn" id="nextBtn" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        (function(){
+            var slides = document.querySelectorAll('.testimonial-slide');
+            var dots = document.getElementById('sliderDots');
+            var current = 0;
+            slides.forEach(function(_, i){
+                var d = document.createElement('span');
+                d.className = 'dot' + (i===0?' active':'');
+                d.onclick = function(){ go(i); };
+                dots.appendChild(d);
+            });
+            function go(n){
+                slides[current].classList.remove('active');
+                dots.children[current].classList.remove('active');
+                current = (n + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                dots.children[current].classList.add('active');
+            }
+            document.getElementById('prevBtn').onclick = function(){ go(current-1); };
+            document.getElementById('nextBtn').onclick = function(){ go(current+1); };
+            setInterval(function(){ go(current+1); }, 6000);
+        })();
+    </script>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Hit the Road with Us?</h2>
+                <p>Register today to unlock premium content, join official club events, and become part of Kenya's fastest-growing car family.</p>
+                <a href="membership.html" class="btn btn-primary btn-lg" style="font-size: 1.1rem; padding: 1rem 2rem;">Become a Member Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+
+    <script>
+        // Loader: hide after brief spin
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var loader = document.getElementById('page-loader');
+                if (loader) {
+                    loader.classList.add('fade-out');
+                    setTimeout(function() { loader.remove(); }, 500);
+                }
+                // Trigger hero entrance animations after loader fades
+                var heroContent = document.querySelector('.hero-content');
+                if (heroContent) heroContent.classList.add('animate');
+            }, 750);
+        });
+
+        // Scroll dissolve: hero content fades and lifts as you scroll away
+        (function() {
+            var heroContent = document.querySelector('.hero-content');
+            var hero = document.querySelector('.hero');
+            if (!heroContent || !hero) return;
+
+            function onScroll() {
+                var heroH = hero.offsetHeight;
+                var scrolled = window.scrollY;
+                if (scrolled > heroH) return;
+                var progress = Math.min(scrolled / (heroH * 0.55), 1);
+                var opacity = 1 - progress * 0.92;
+                var translateY = progress * -28;
+                heroContent.style.opacity = opacity;
+                heroContent.style.transform = 'translateY(' + translateY + 'px)';
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+        })();
+    </script>
+
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+    <!-- Session logout notification -->
+    <script>
+        (function() {
+            const reason = new URLSearchParams(window.location.search).get('reason');
+            if (reason === 'idle') {
+                // Small toast instead of alert - cleaner UX
+                window.addEventListener('DOMContentLoaded', function() {
+                    const toast = document.createElement('div');
+                    toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:0.85rem 1.5rem;border-radius:10px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.3);';
+                    toast.textContent = 'You were signed out due to inactivity.';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 4000);
+                    // Clean the URL
+                    history.replaceState(null, '', window.location.pathname);
+                });
+            } else if (reason === 'expired') {
+                window.addEventListener('DOMContentLoaded', function() {
+                    const toast = document.createElement('div');
+                    toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:0.85rem 1.5rem;border-radius:10px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.3);';
+                    toast.textContent = 'Your session has expired. Please log in again.';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 4000);
+                    history.replaceState(null, '', window.location.pathname);
+                });
+            } else if (reason === 'manual') {
+                window.addEventListener('DOMContentLoaded', function() {
+                    const toast = document.createElement('div');
+                    toast.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:0.85rem 1.5rem;border-radius:10px;font-family:Inter,sans-serif;font-size:0.9rem;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,0.3);';
+                    toast.textContent = 'You have been signed out. See you next time!';
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 4000);
+                    history.replaceState(null, '', window.location.pathname);
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

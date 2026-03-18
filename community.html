@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Community | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Join the conversation. Chat with other CLUBnoteKE members, share your car mods, and access the active forum.">
+    <meta property="og:title" content="Community | CLUBnoteKE">
+    <meta property="og:description" content="Join the CLUBnoteKE community forum to discuss, ask questions, and share your Nissan Note journey.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/club_logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/community.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Community",
+        "item": "https://clubnoteke.com/community.html"
+      }]
+    }
+    </script>
+    <style>
+        .community-panels {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+        }
+        .panels-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        /* Panel Styles */
+        .panel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 3rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        .panel-icon {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        .panel-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .panel-desc {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Member Spotlight */
+        .spotlight {
+            padding: 6rem 0;
+            background-color: var(--bg-gray);
+        }
+        .spotlight-card {
+            display: flex;
+            background: var(--bg-light);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .spotlight-img {
+            width: 45%;
+            object-fit: cover;
+        }
+        .spotlight-content {
+            width: 55%;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .spotlight-tag {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        .spotlight-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .spotlight-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+        }
+        .spotlight-member {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        /* Live Stats */
+        .live-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-val {
+            font-family: 'Outfit';
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        
+        @media (max-width: 768px) {
+            .panels-grid { grid-template-columns: 1fr; }
+            .spotlight-card { flex-direction: column; }
+            .spotlight-img { width: 100%; height: 300px; }
+            .spotlight-content { width: 100%; padding: 2rem; }
+        }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html" class="active">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                        <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <img src="assets/meet.jpg" alt="People chatting around cars" class="page-header-bg" loading="lazy">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title reveal active">Community Hub</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">Connecting Note owners across the +254.</p>
+        </div>
+    </header>
+
+    <!-- Community Panels -->
+    <section class="community-panels">
+        <div class="container">
+            <div class="panels-grid">
+                <!-- WhatsApp Panel -->
+                <div class="panel">
+                    <i class="fa-brands fa-whatsapp panel-icon" ></i>
+                    <h2 class="panel-title">WhatsApp Groups</h2>
+                    <p class="panel-desc">Join our highly active WhatsApp groups. Get real-time advice from mechanics, buy/sell parts, and organize impromptu meetups.</p>
+                    <a href="membership.html" class="btn btn-dark btn-lg">Join via Membership</a>
+                    
+                    <div class="live-stats">
+                        <div class="stat-item">
+                            <div class="stat-val">3</div>
+                            <div class="stat-label">Active Groups</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-val">800+</div>
+                            <div class="stat-label">Chatty Members</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Web Forum Panel -->
+                <div class="panel">
+                    <i class="fa-solid fa-comments panel-icon"></i>
+                    <h2 class="panel-title">Online Forum</h2>
+                    <p class="panel-desc">Browse through years of archived discussions, DIY repair guides, and deep-dive technical threads built by the community.</p>
+                    <a href="membership.html" class="btn btn-primary btn-lg">Join the Forum</a>
+                    
+                    <div class="live-stats">
+                        <div class="stat-item">
+                            <div class="stat-val">12K</div>
+                            <div class="stat-label">Total Posts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-val">1,200</div>
+                            <div class="stat-label">Topics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Member Spotlight -->
+    <section class="spotlight">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle text-gradient">Monthly Feature</span>
+                <h2 class="section-title">Member Spotlight</h2>
+                <p style="color: var(--text-muted);">Highlighting the incredible people and cars in our club.</p>
+            </div>
+            
+            <div class="spotlight-card">
+                <img src="assets/action.jpg" alt="Spotlight Car" class="spotlight-img" loading="lazy">
+                <div class="spotlight-content">
+                    <span class="spotlight-tag">March 2026 Spotlight</span>
+                    <h3 class="spotlight-title">Turning a Daily Driver into a Track Toy</h3>
+                    <p class="spotlight-quote">"I never thought a Nissan Note could be this fun on corners. Putting in the custom coilovers and the cold air intake completely changed the character of the E12 HR12DDR."</p>
+                    <p class="spotlight-member">— Kevin O., Full Member since 2022</p>
+                    
+                    <div style="margin-top: 2rem;">
+                        <a href="blog.html" class="btn btn-outline" style="color: var(--accent-color); border-color: var(--accent-color);">Read on Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Parts Marketplace -->
+    <section style="padding: 6rem 0; background-color: var(--bg-light);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-subtitle text-gradient">Buy &amp; Sell</span>
+                <h2 class="section-title">Parts Marketplace</h2>
+                <p style="color:var(--text-muted);">Buy, sell and swap genuine Nissan Note parts with fellow members. Members-verified listings only.</p>
+            </div>
+
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem;">
+                <button class="filter-btn active" data-mfilter="all" onclick="filterMarket('all',this)">All Listings</button>
+                <button class="filter-btn" data-mfilter="forsale" onclick="filterMarket('forsale',this)">For Sale</button>
+                <button class="filter-btn" data-mfilter="wanted" onclick="filterMarket('wanted',this)">Wanted</button>
+                <button class="filter-btn" data-mfilter="swap" onclick="filterMarket('swap',this)">Swap</button>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;" id="marketplace-grid">
+
+                <div class="glass-card" data-mcategory="forsale" style="border-radius:16px;padding:1.5rem;border:1px solid var(--border-color);">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+                        <span style="background:rgba(37,211,102,0.1);color:#25d366;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:50px;">FOR SALE</span>
+                        <span style="font-size:0.8rem;color:var(--text-muted);">E12 • Nairobi</span>
+                    </div>
+                    <h3 style="font-family:'Outfit';font-size:1.1rem;color:var(--text-dark);margin-bottom:0.5rem;">OEM Front Bumper (E12 2014–2016)</h3>
+                    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;">Genuine Nissan bumper, white, minor scratch on left corner. Perfect for a respray. Removing from my car for a facelift upgrade.</p>
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-family:'Outfit';font-size:1.4rem;font-weight:800;color:var(--accent-color);">KES 18,000</span>
+                        <a href="https://wa.me/254736771402?text=Hello!%20I'm%20interested%20in%20the%20OEM%20E12%20Front%20Bumper%20listed%20on%20CLUBnoteKE." target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.85rem;"><i class="fa-brands fa-whatsapp" style="margin-right:6px;"></i>Contact</a>
+                    </div>
+                </div>
+
+                <div class="glass-card" data-mcategory="wanted" style="border-radius:16px;padding:1.5rem;border:1px solid var(--border-color);">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+                        <span style="background:rgba(59,130,246,0.1);color:#3B82F6;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:50px;">WANTED</span>
+                        <span style="font-size:0.8rem;color:var(--text-muted);">E11 • Mombasa</span>
+                    </div>
+                    <h3 style="font-family:'Outfit';font-size:1.1rem;color:var(--text-dark);margin-bottom:0.5rem;">E11 Headlamp Assembly (Right Side)</h3>
+                    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;">Looking for a good condition right headlamp for an E11 2008–2012. OEM preferred. Willing to pay fair price for undamaged unit.</p>
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-family:'Outfit';font-size:1rem;font-weight:600;color:var(--text-muted);">Budget: KES 10,000</span>
+                        <a href="https://wa.me/254736771402?text=Hello!%20I%20have%20an%20E11%20headlamp%20assembly%20you're%20looking%20for." target="_blank" rel="noopener noreferrer" class="btn btn-dark" style="padding:0.5rem 1rem;font-size:0.85rem;"><i class="fa-brands fa-whatsapp" style="margin-right:6px;"></i>Contact</a>
+                    </div>
+                </div>
+
+                <div class="glass-card" data-mcategory="forsale" style="border-radius:16px;padding:1.5rem;border:1px solid var(--border-color);">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+                        <span style="background:rgba(37,211,102,0.1);color:#25d366;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:50px;">FOR SALE</span>
+                        <span style="font-size:0.8rem;color:var(--text-muted);">E12 • Nairobi</span>
+                    </div>
+                    <h3 style="font-family:'Outfit';font-size:1.1rem;color:var(--text-dark);margin-bottom:0.5rem;">Set of 4 Alloy Rims 16" + Tyres</h3>
+                    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;">Bridgestone 195/55R16 tyres on genuine E12 alloys. Tyres at 60% tread life. Full set of 4 — upgrading to 17s. Rims straight, no kerb rash. Located Westlands.</p>
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-family:'Outfit';font-size:1.4rem;font-weight:800;color:var(--accent-color);">KES 65,000</span>
+                        <a href="https://wa.me/254736771402?text=Hello!%20I'm%20interested%20in%20the%20set%20of%2016%22%20alloy%20rims%20listed%20on%20CLUBnoteKE." target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding:0.5rem 1rem;font-size:0.85rem;"><i class="fa-brands fa-whatsapp" style="margin-right:6px;"></i>Contact</a>
+                    </div>
+                </div>
+
+                <div class="glass-card" data-mcategory="swap" style="border-radius:16px;padding:1.5rem;border:1px solid var(--border-color);">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;">
+                        <span style="background:rgba(245,158,11,0.1);color:#F59E0B;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:50px;">SWAP</span>
+                        <span style="font-size:0.8rem;color:var(--text-muted);">E12 • Nakuru</span>
+                    </div>
+                    <h3 style="font-family:'Outfit';font-size:1.1rem;color:var(--text-dark);margin-bottom:0.5rem;">E12 HR15DE Engine Cover</h3>
+                    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;">Have a black engine cover from HR15DE. Looking to swap for the same cover in silver/grey. Just a cosmetic preference. Both must be undamaged.</p>
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-family:'Outfit';font-size:1rem;font-weight:600;color:var(--text-muted);">Swap only</span>
+                        <a href="https://wa.me/254736771402?text=Hello!%20I%20have%20an%20E12%20engine%20cover%20I'd%20like%20to%20swap." target="_blank" rel="noopener noreferrer" class="btn btn-dark" style="padding:0.5rem 1rem;font-size:0.85rem;"><i class="fa-brands fa-whatsapp" style="margin-right:6px;"></i>Contact</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align:center;margin-top:3rem;padding:2rem;background:var(--bg-gray);border-radius:16px;">
+                <h3 style="font-family:'Outfit';color:var(--text-dark);margin-bottom:0.75rem;">Have a part to sell or something you need?</h3>
+                <p style="color:var(--text-muted);margin-bottom:1.5rem;">WhatsApp our admin with your listing details. Members-only listings — join to post.</p>
+                <a href="https://wa.me/254736771402?text=Hello!%20I%20would%20like%20to%20post%20a%20parts%20listing%20on%20CLUBnoteKE." target="_blank" rel="noopener noreferrer" class="btn btn-primary"><i class="fa-brands fa-whatsapp" style="margin-right:8px;"></i>Submit a Listing</a>
+            </div>
+        </div>
+    </section>
+    <script>
+        function filterMarket(filter, btn) {
+            document.querySelectorAll('[data-mfilter]').forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            document.querySelectorAll('#marketplace-grid [data-mcategory]').forEach(function(card){
+                card.style.display = (filter === 'all' || card.getAttribute('data-mcategory') === filter) ? '' : 'none';
+            });
+        }
+    </script>
+
+    <!-- Spotlight & Live Feed Sections -->
+    <section class="community-extras" style="padding: 4rem 0; background-color: var(--bg-gray);">
+        <div class="container">
+            <!-- Member of the Month -->
+            <div class="reveal" style="margin-bottom: 5rem;">
+                <div class="section-header">
+                    <span class="section-subtitle text-gradient">Recognition</span>
+                    <h2 class="section-title">Member of the Month</h2>
+                </div>
+                <div class="card glass-card" style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: center; padding: 3rem; border-radius: 20px;">
+                    <div class="spotlight-image" style="border-radius: 15px; overflow: hidden; box-shadow: var(--shadow-lg);">
+                        <img src="assets/profile_kelvin.jpg" alt="Member of the Month" loading="lazy">
+                    </div>
+                    <div class="spotlight-content">
+                        <h3 style="font-size: 2rem; color: var(--accent-color);">Kelvin M.</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0; opacity: 0.9;">"Joining CLUBnoteKE changed my perspective on car ownership. It's not just about the car; it's about the road trips and the family we've built."</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <div class="stat-badge" style="background: rgba(195,0,47,0.1); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;">
+                                <i class="fa-solid fa-car"></i> Nissan Note E12 (NISMO)
+                            </div>
+                            <div class="stat-badge" style="background: rgba(195,0,47,0.1); padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;">
+                                <i class="fa-solid fa-calendar"></i> Member since 2022
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #CLUBnoteKE Live Feed -->
+            <div class="reveal">
+                <div class="section-header">
+                    <span class="section-subtitle text-gradient">Socials</span>
+                    <h2 class="section-title">#CLUBnoteKE Live Feed</h2>
+                </div>
+                <div class="live-feed-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                    <div class="feed-item glass-card" style="aspect-ratio: 1; border-radius: 15px; overflow: hidden; position: relative;">
+                        <img src="assets/gallery_convoy_line.jpg" alt="Live Feed Post" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 10px; left: 10px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">@note_driver</div>
+                    </div>
+                    <div class="feed-item glass-card" style="aspect-ratio: 1; border-radius: 15px; overflow: hidden; position: relative;">
+                        <img src="assets/gallery_meet_major.jpg" alt="Live Feed Post" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 10px; left: 10px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">@clubnoteke_kenya</div>
+                    </div>
+                    <div class="feed-item glass-card" style="aspect-ratio: 1; border-radius: 15px; overflow: hidden; position: relative;">
+                        <img src="assets/gallery_tigoni_drive.jpg" alt="Live Feed Post" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 10px; left: 10px; color: white; font-size: 0.8rem; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px;">@e13_fanatic</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="https://instagram.com/note_club_kenya" target="_blank" class="btn btn-outline" style="color: var(--text-dark); border-color: var(--text-dark);">View All on Instagram <i class="fa-brands fa-instagram" style="margin-left: 8px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Reused Footer -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+
+    <script src="js/main.js"></script>
+
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>

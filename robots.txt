@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /login.html
+Disallow: /garage.html
+Allow: /
+
+Sitemap: https://clubnoteke.com/sitemap.xml

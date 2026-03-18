@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Garage — CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .garage-header {
+            padding-top: 120px;
+            padding-bottom: 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #33000d 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .garage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: -40px;
+            padding-bottom: 60px;
+        }
+
+        @media (max-width: 992px) {
+            .garage-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Car Profile Card */
+        .profile-card {
+            padding: 2.5rem;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-badge-container {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 150px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .profile-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .detail-item label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-item span {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 3px solid var(--card-bg);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        /* Countdown Ring */
+        .countdown-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .progress-ring {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .progress-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .progress-ring .background { stroke: rgba(0,0,0,0.1); }
+        [data-theme="dark"] .progress-ring .background { stroke: rgba(255,255,255,0.05); }
+
+        .progress-ring .foreground {
+            stroke: #10B981; /* Default Green */
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease, stroke 0.3s ease;
+        }
+
+        .countdown-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .days-value {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1;
+        }
+
+        .days-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo">
+                <div class="logo-text">CLUB<span>note</span>KE</div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="garage.html" class="active">My Garage</a></li>
+                <li><a href="know-your-car.html">Maintenance</a></li>
+                <li><a href="javascript:void(0)" onclick="clubnoteLogout()" style="color: var(--accent-color); font-weight: 600;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="garage-header">
+        <div class="container">
+            <h1 class="reveal">My Digital Garage</h1>
+            <p class="reveal" style="opacity: 0.8; margin-top: 0.5rem;">Manage your Nissan Note profile and service history.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="garage-grid">
+            <!-- Column 1: Profile & Countdown -->
+            <div class="reveal-left">
+                <!-- Profile Card -->
+                <div class="profile-card glass-card">
+                    <div class="model-badge-container">
+                        <img src="assets/note_e12.png" id="modelBadge" alt="Car Illustration">
+                    </div>
+                    <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Vehicle Profile</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Verified Member Vehicle #CNK-2026-084</p>
+                    
+                    <div class="profile-detail-grid">
+                        <div class="detail-item">
+                            <label>Owner</label>
+                            <span id="ownerName">Member Name</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Nickname</label>
+                            <span>The Silver Ghost</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Registration</label>
+                            <span>KDD 456X</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>VIN</label>
+                            <span>E12-084XXX920</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Generation</label>
+                            <span id="genText">E12 (Facelift)</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Engine</label>
+                            <span id="engineText">DIG-S (HR12DDR)</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Year</label>
+                            <span>2017</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Colour</label>
+                            <span>Brilliant Silver</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countdown Card -->
+                <div class="card glass-card" style="margin-top: 2rem; padding: 2.5rem; border-radius: 20px;">
+                    <h3 style="margin-bottom: 2rem; text-align: center;">Next Scheduled Service</h3>
+                    <div class="countdown-container">
+                        <div class="progress-ring">
+                            <svg>
+                                <circle class="background" cx="75" cy="75" r="70"></circle>
+                                <circle id="progressForeground" class="foreground" cx="75" cy="75" r="70"></circle>
+                            </svg>
+                            <div class="countdown-text">
+                                <span id="daysRemaining" class="days-value">--</span>
+                                <span class="days-label">Days Left</span>
+                            </div>
+                        </div>
+                        <p id="serviceStatus" style="margin-top: 1.5rem; font-weight: 600; font-size: 0.9rem;">Calculating status...</p>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">Based on 5,000km / 6-month interval</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: Timeline -->
+            <div class="reveal-right">
+                <div class="card glass-card" style="padding: 2.5rem; border-radius: 20px; height: 100%;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h3>Service Timeline</h3>
+                        <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.8rem;"><i class="fa-solid fa-plus" style="margin-right: 8px;"></i> Add Entry</button>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <span class="timeline-date">Oct 12, 2025</span>
+                            <h4 style="margin: 0.25rem 0;">Major Service</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Mileage: 84,200km • Garage: Insight Auto Services</p>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Oil change, CVT fluid, spark plugs, and brake pads replacement.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">Mar 15, 2025</span>
+                            <h4 style="margin: 0.25rem 0;">Minor Service</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Mileage: 79,150km • Garage: Insight Auto Services</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-date">Aug 20, 2024</span>
+                            <h4 style="margin: 0.25rem 0;">Suspension Check</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Mileage: 74,000km • Garage: Self Care</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. Digital Garage Module.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/session-guard.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Garage Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const memberName = localStorage.getItem('clubnote_member_name') || 'Valued Member';
+            document.getElementById('ownerName').textContent = memberName;
+
+            // Service Countdown Logic
+            const lastServiceDate = new Date('2025-10-12'); // Mock data
+            const monthsInterval = 6;
+            const nextServiceDate = new Date(lastServiceDate);
+            nextServiceDate.setMonth(nextServiceDate.getMonth() + monthsInterval);
+
+            const today = new Date();
+            const diffTime = nextServiceDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            const displayDays = Math.max(0, diffDays);
+            const daysElem = document.getElementById('daysRemaining');
+            const statusElem = document.getElementById('serviceStatus');
+            const progressRing = document.getElementById('progressForeground');
+            
+            daysElem.textContent = displayDays;
+
+            // Update Progress Ring & Colors
+            const maxDays = monthsInterval * 30;
+            const percentage = Math.min(100, Math.max(0, (displayDays / maxDays) * 100));
+            const dashOffset = 440 - (440 * percentage) / 100;
+            progressRing.style.strokeDashoffset = dashOffset;
+
+            if (displayDays > 30) {
+                progressRing.style.stroke = '#10B981'; // Green
+                statusElem.textContent = 'All Good! No immediate service needed.';
+                statusElem.style.color = '#10B981';
+            } else if (displayDays > 10) {
+                progressRing.style.stroke = '#F59E0B'; // Amber
+                statusElem.textContent = 'Service due soon! Plan your visit.';
+                statusElem.style.color = '#F59E0B';
+            } else {
+                progressRing.style.stroke = '#EF4444'; // Red
+                statusElem.textContent = 'URGENT: Service overdue or iminent!';
+                statusElem.style.color = '#EF4444';
+            }
+
+            // Model Badge Logic (Sync with mock/data)
+            const generation = 'E12'; // Mock
+            const badge = document.getElementById('modelBadge');
+            badge.src = `assets/note_${generation.toLowerCase().substring(0,3)}.png`;
+        });
+    </script>
+</body>
+</html>

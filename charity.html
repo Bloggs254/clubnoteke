@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Charity & Community Service | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Learn how CLUBnoteKE gives back to the community through charity drives and donations across Kenya.">
+    <meta property="og:title" content="Charity & Community Service | CLUBnoteKE">
+    <meta property="og:description" content="CLUBnoteKE gives back. Learn about our charity work and community impact.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/club_logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/charity.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Charity",
+        "item": "https://clubnoteke.com/charity.html"
+      }]
+    }
+    </script>
+    <style>
+        .charity-impact {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .impact-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .impact-number {
+            font-family: 'Outfit';
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Campaigns */
+        .campaigns {
+            padding: 6rem 0;
+            background-color: var(--bg-gray);
+        }
+
+        .campaign-item {
+            display: flex;
+            background: var(--bg-light);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2.5rem;
+        }
+
+        .campaign-img {
+            width: 40%;
+            object-fit: cover;
+        }
+
+        .campaign-content {
+            width: 60%;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .campaign-status {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+
+        .status-active {
+            background-color: #DEF7EC;
+            color: #03543F;
+        }
+
+        .status-completed {
+            background-color: #F3F4F6;
+            color: #4B5563;
+        }
+
+        .campaign-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .campaign-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #E5E7EB;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .donation-cta {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .campaign-item {
+                flex-direction: column;
+            }
+
+            .campaign-img {
+                width: 100%;
+                height: 250px;
+            }
+
+            .campaign-content {
+                width: 100%;
+                padding: 2rem;
+            }
+        }
+    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo"
+                    style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                        <button id="darkModeToggle" class="btn btn-outline dark-mode-btn"
+                style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i
+                    class="fa-solid fa-moon"></i></button>
+            <button class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <img src="assets/convoy.jpg" alt="Giving back" class="page-header-bg" loading="lazy">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title reveal active">Community Impact</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">More than just cars. Giving back to our
+                community.</p>
+        </div>
+    </header>
+
+    <!-- Impact Stats -->
+    <section class="charity-impact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle text-gradient">Since 2021</span>
+                <h2 class="section-title">Our Collective Impact</h2>
+                <p style="color: var(--text-muted);">Through the generosity of our members, we've made a real difference
+                    across Kenya.</p>
+            </div>
+
+            <div class="impact-grid">
+                <div class="impact-card glass-card">
+                    <i class="fa-solid fa-hand-holding-dollar impact-icon"></i>
+                    <div class="impact-number">1 M+</div>
+                    <div class="impact-label">KES Donated</div>
+                </div>
+                <div class="impact-card">
+                    <i class="fa-solid fa-children impact-icon"></i>
+                    <div class="impact-number">5+</div>
+                    <div class="impact-label">Children's Homes Supported</div>
+                </div>
+                <div class="impact-card">
+                    <i class="fa-solid fa-tree impact-icon"></i>
+                    <div class="impact-number">300+</div>
+                    <div class="impact-label">Trees Planted</div>
+                </div>
+                <div class="impact-card">
+                    <i class="fa-solid fa-handshake-angle impact-icon"></i>
+                    <div class="impact-number">5+</div>
+                    <div class="impact-label">Charity Drives</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campaigns -->
+    <section class="campaigns">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle text-gradient">Drives</span>
+                <h2 class="section-title">Featured Campaigns</h2>
+            </div>
+
+            <!-- Drive 1 (Soila Girls) -->
+            <div class="campaign-item glass-card">
+                <img src="assets/soila_girls_charity.jpg" alt="Soila Girls Charity Drive" class="campaign-img" loading="lazy" style="object-position: center 25%;">
+                <div class="campaign-content">
+                    <span class="campaign-status status-completed">Completed</span>
+                    <h3 class="campaign-title">Soila Girls Charity Drive</h3>
+                    <p class="campaign-desc">Providing essential support and inspiration to the girls at Soila. Our flagship community outreach initiative.</p>
+
+                    <div>
+                        <div class="progress-text">
+                            <span>Raised: KES 190,000</span>
+                            <span style="color: var(--accent-color);">100% Impact</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drive 2 (2nd Soila) -->
+            <div class="campaign-item">
+                <img src="assets/soila_girls_2.jpg" alt="2nd Soila Drive" class="campaign-img" loading="lazy" style="object-position: center 30%;">
+                <div class="campaign-content">
+                    <span class="campaign-status status-completed">Completed</span>
+                    <h3 class="campaign-title">2nd Soila Charity Drive</h3>
+                    <p class="campaign-desc">A follow-up visit to ensure sustained impact and continue our mentorship and support program.</p>
+                    
+                    <div>
+                        <div class="progress-text">
+                            <span>Raised: KES 150,000</span>
+                            <span style="color: var(--accent-color);">100% Impact</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drive 3 (Mombasa) -->
+            <div class="campaign-item">
+                <img src="assets/mombasa_charity.jpg" alt="Mombasa Charity Drive" class="campaign-img" loading="lazy" style="object-position: center 42%;">
+                <div class="campaign-content">
+                    <span class="campaign-status status-completed">Completed</span>
+                    <h3 class="campaign-title">Mombasa Charity Drive</h3>
+                    <p class="campaign-desc">Extending our reach to the coast, providing aid to local community centers during our regional road trip.</p>
+                    
+                    <div>
+                        <div class="progress-text">
+                            <span>Raised: KES 100,000</span>
+                            <span style="color: var(--accent-color);">100% Impact</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drive 4 (Kisumu) -->
+            <div class="campaign-item">
+                <img src="assets/kisumu_charity.jpg" alt="Kisumu Charity Drive" class="campaign-img" loading="lazy" style="object-position: center 35%;">
+                <div class="campaign-content">
+                    <span class="campaign-status status-completed">Completed</span>
+                    <h3 class="campaign-title">Kisumu Charity Drive</h3>
+                    <p class="campaign-desc">Our Western Kenya outreach, supporting children's welfare and educational facilities in Kisumu.</p>
+                    
+                    <div>
+                        <div class="progress-text">
+                            <span>Raised: KES 120,000</span>
+                            <span style="color: var(--accent-color);">100% Impact</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Reused Footer -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo"
+                            style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing
+                        knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i
+                                class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i
+            class="fa-solid fa-arrow-up"></i></button>
+</body>
+
+</html>

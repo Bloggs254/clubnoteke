@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:;">
+    <title>Member Builds | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Explore the most modified and styled Nissan Notes in Kenya. Member builds, mods, and custom setups from CLUBnoteKE.">
+    <meta property="og:title" content="Member Builds | CLUBnoteKE">
+    <meta property="og:description" content="The most modified Nissan Notes in Kenya — member builds, mods, and custom setups.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/blue_silver_stance.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/builds.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .build-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-md); transition: all 0.35s cubic-bezier(0.4,0,0.2,1); border: 1px solid var(--border-color); }
+        .build-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .build-img { width: 100%; height: 260px; object-fit: cover; display: block; transition: transform 0.5s ease; }
+        .build-card:hover .build-img { transform: scale(1.04); }
+        .build-img-wrap { overflow: hidden; position: relative; }
+        .build-badge { position: absolute; top: 16px; left: 16px; background: var(--gradient-accent); color: white; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .build-body { padding: 1.75rem; }
+        .build-name { font-family: 'Outfit'; font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.25rem; }
+        .build-sub { font-size: 0.9rem; color: var(--accent-color); font-weight: 600; margin-bottom: 1rem; }
+        .build-mods { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+        .mod-tag { background: rgba(195,0,47,0.08); color: var(--accent-color); font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 50px; border: 1px solid rgba(195,0,47,0.15); }
+        .build-quote { font-size: 0.92rem; color: var(--text-muted); font-style: italic; line-height: 1.7; border-left: 3px solid var(--accent-color); padding-left: 1rem; margin-bottom: 1.25rem; }
+        .builds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+    </style>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height:45px;width:auto;object-fit:contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display:flex;gap:1rem;align-items:center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding:0.5rem;border:none;font-size:1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <img src="assets/blue_silver_stance.jpg" alt="Member Builds" class="page-header-bg" loading="eager">
+        <div class="container" style="position:relative;z-index:2;">
+            <h1 class="page-title reveal active">Member Builds</h1>
+            <p style="font-size:1.1rem;margin-top:0.75rem;opacity:0.85;">The most modified and styled Nissan Notes in Kenya.</p>
+        </div>
+    </header>
+
+    <section style="padding: 6rem 0; background: var(--bg-gray);">
+        <div class="container">
+
+            <div class="builds-grid">
+
+                <div class="build-card reveal">
+                    <div class="build-img-wrap">
+                        <img src="assets/blue_silver_stance.jpg" alt="Kevin's E12 NISMO" class="build-img" loading="lazy">
+                        <span class="build-badge">Featured Build</span>
+                    </div>
+                    <div class="build-body">
+                        <div class="build-name">Kevin M. — "The Silver Bullet"</div>
+                        <div class="build-sub">Nissan Note E12 NISMO · 2016</div>
+                        <div class="build-mods">
+                            <span class="mod-tag">Custom Coilovers</span>
+                            <span class="mod-tag">Cold Air Intake</span>
+                            <span class="mod-tag">NISMO Body Kit</span>
+                            <span class="mod-tag">17" Enkei Rims</span>
+                            <span class="mod-tag">Tinted Windows</span>
+                        </div>
+                        <p class="build-quote">"I never thought a Nissan Note could be this much fun on corners. The coilovers completely changed the character of this car."</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.85rem;color:var(--text-muted);">Full Member since 2022</span>
+                            <a href="community.html" class="btn btn-outline" style="color:var(--accent-color);border-color:var(--accent-color);padding:0.4rem 1rem;font-size:0.85rem;">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="build-card reveal" style="transition-delay:0.1s;">
+                    <div class="build-img-wrap">
+                        <img src="assets/action.jpg" alt="Club action shot" class="build-img" loading="lazy">
+                        <span class="build-badge">Track Build</span>
+                    </div>
+                    <div class="build-body">
+                        <div class="build-name">James K. — "Red Devil"</div>
+                        <div class="build-sub">Nissan Note E12 HR15DE · 2014</div>
+                        <div class="build-mods">
+                            <span class="mod-tag">Candy Red Respray</span>
+                            <span class="mod-tag">Sports Exhaust</span>
+                            <span class="mod-tag">Strut Brace</span>
+                            <span class="mod-tag">Recaro Seats</span>
+                            <span class="mod-tag">Blackout Trim</span>
+                        </div>
+                        <p class="build-quote">"The respray took 3 weeks and cost me weekends, but every time I see it in the parking lot I know it was worth every shilling."</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.85rem;color:var(--text-muted);">Full Member since 2023</span>
+                            <a href="community.html" class="btn btn-outline" style="color:var(--accent-color);border-color:var(--accent-color);padding:0.4rem 1rem;font-size:0.85rem;">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="build-card reveal" style="transition-delay:0.2s;">
+                    <div class="build-img-wrap">
+                        <img src="assets/fleet_savanna.jpg" alt="Barbra's E11" class="build-img" loading="lazy">
+                        <span class="build-badge">Daily Driver</span>
+                    </div>
+                    <div class="build-body">
+                        <div class="build-name">Barbra N. — "Desert Storm"</div>
+                        <div class="build-sub">Nissan Note E11 DIG-S · 2011</div>
+                        <div class="build-mods">
+                            <span class="mod-tag">Matte Bronze Wrap</span>
+                            <span class="mod-tag">LED Headlamps</span>
+                            <span class="mod-tag">Ambient Interior Lighting</span>
+                            <span class="mod-tag">Roof Rack</span>
+                        </div>
+                        <p class="build-quote">"People said you can't make an E11 look premium. I said hold my wrapping bill. This thing turns heads everywhere I go."</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:0.85rem;color:var(--text-muted);">Full Member since 2023</span>
+                            <a href="community.html" class="btn btn-outline" style="color:var(--accent-color);border-color:var(--accent-color);padding:0.4rem 1rem;font-size:0.85rem;">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="text-align:center;margin-top:4rem;padding:3rem;background:var(--card-bg);border-radius:20px;box-shadow:var(--shadow-sm);">
+                <i class="fa-solid fa-car-side" style="font-size:3rem;color:var(--accent-color);margin-bottom:1.5rem;display:block;"></i>
+                <h3 style="font-family:'Outfit';font-size:1.6rem;color:var(--text-dark);margin-bottom:0.75rem;">Feature Your Build</h3>
+                <p style="color:var(--text-muted);max-width:500px;margin:0 auto 2rem;">Built something special? Share your modifications, the story behind the build, and your best photos. Featured builds get a permanent spot on this page.</p>
+                <a href="https://wa.me/254736771402?text=Hello!%20I%20would%20like%20to%20feature%20my%20Nissan%20Note%20build%20on%20CLUBnoteKE." target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fa-brands fa-whatsapp" style="margin-right:8px;"></i> Submit Your Build
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo"><img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height:45px;width:auto;object-fit:contain;"><div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div><h4 class="footer-title">Quick Links</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="membership.html">Membership</a></li><li><a href="events.html">Events</a></li><li><a href="gallery.html">Gallery</a></li></ul></div>
+                <div><h4 class="footer-title">Resources</h4><ul class="footer-links"><li><a href="know-your-car.html">Car Maintenance</a></li><li><a href="community.html">Community</a></li><li><a href="blog.html">Blog</a></li><li><a href="builds.html">Member Builds</a></li></ul></div>
+                <div><h4 class="footer-title">Contact</h4><ul class="footer-contact"><li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li><li><i class="fa-solid fa-phone"></i> +254 736 771 402</li><li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CLUBnoteKE. All rights reserved. <a href="privacy.html" style="color:var(--accent-color);text-decoration:none;margin-left:10px;">Privacy Policy</a></p></div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <script src="js/main.js"></script>
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>

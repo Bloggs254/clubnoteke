@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com; frame-src https://www.google.com;">
+    <title>Events & Meets | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="View upcoming road trips, car clinics, and monthly meetups for CLUBnoteKE.">
+    <meta property="og:title" content="Events & Meets | CLUBnoteKE">
+    <meta property="og:description" content="View upcoming road trips, car clinics, and monthly meetups for CLUBnoteKE.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/club_logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/events.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Events",
+        "item": "https://clubnoteke.com/events.html"
+      }]
+    }
+    </script>
+    <style>
+        .events-section {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+                .event-card {
+            height: 100%;
+        }
+        .event-img {
+            height: 240px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .event-desc {
+            min-height: 4.5em;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* Original below */
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .event-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+        }
+        .event-date-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .event-date-badge .day {
+            font-size: 1.5rem;
+            display: block;
+            line-height: 1;
+        }
+        .event-date-badge .month {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .event-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .event-meta i {
+            color: var(--accent-color);
+            margin-right: 5px;
+        }
+        .event-title {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        .event-desc {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .event-footer {
+            border-top: 1px solid #F3F4F6;
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Past Events */
+        .past-events {
+            padding: 6rem 0;
+            background-color: var(--bg-gray);
+        }
+        .past-events-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-title {
+            color: white;
+            font-family: 'Outfit';
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        @media (max-width: 900px) {
+            .past-events-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .past-events-grid { grid-template-columns: 1fr; }
+        }    </style>
+    <!-- JSON-LD Schema for Google Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CLUBnoteKE",
+      "alternateName": "Note Club Kenya",
+      "url": "https://clubnoteke.com",
+      "logo": "https://clubnoteke.com/assets/club_logo.png",
+      "description": "Kenya's premier club for Nissan Note owners, focused on community, car care, and national road trips.",
+      "foundingDate": "2021",
+      "sameAs": [
+        "https://instagram.com/note_club_kenya",
+        "https://x.com/note_club_kenya",
+        "https://www.tiktok.com/@noteclubkenya"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Events",
+        "item": "https://clubnoteke.com/events.html"
+      }]
+    }
+    </script>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="know-your-car.html">Know Your Car</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="mobile-menu-btn" style="position: static;">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <img src="assets/convoy.jpg" alt="Convoy" class="page-header-bg" loading="lazy">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title reveal active">Events & Meets</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem; opacity: 0.9;">Hit the road with the best Nissan Note family in Kenya.</p>
+        </div>
+    </header>
+
+
+    <!-- Event Countdown Banner -->
+    <section style="background: var(--gradient-primary); padding: 2.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);">
+        <div class="container">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
+                <div>
+                    <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;">
+                        <span style="background:var(--gradient-accent); color:white; font-size:0.75rem; font-weight:700; padding:0.2rem 0.7rem; border-radius:50px; text-transform:uppercase; letter-spacing:1px;">Next Event</span>
+                        <span style="color:rgba(255,255,255,0.5); font-size:0.9rem;"><i class="fa-solid fa-location-dot" style="margin-right:4px;"></i> Western Kenya</span>
+                    </div>
+                    <h2 style="font-family:'Outfit'; font-size:1.8rem; color:white; margin:0;">Grand Tour — May 1–3, 2026</h2>
+                </div>
+                <div style="display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap;">
+                    <div style="display:flex; gap:1rem;">
+                        <div style="text-align:center; background:rgba(255,255,255,0.06); border-radius:12px; padding:0.75rem 1.25rem; min-width:70px;">
+                            <div id="cd-days" style="font-family:'Outfit'; font-size:2rem; font-weight:800; color:var(--accent-color); line-height:1;">--</div>
+                            <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Days</div>
+                        </div>
+                        <div style="text-align:center; background:rgba(255,255,255,0.06); border-radius:12px; padding:0.75rem 1.25rem; min-width:70px;">
+                            <div id="cd-hours" style="font-family:'Outfit'; font-size:2rem; font-weight:800; color:white; line-height:1;">--</div>
+                            <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Hours</div>
+                        </div>
+                        <div style="text-align:center; background:rgba(255,255,255,0.06); border-radius:12px; padding:0.75rem 1.25rem; min-width:70px;">
+                            <div id="cd-mins" style="font-family:'Outfit'; font-size:2rem; font-weight:800; color:white; line-height:1;">--</div>
+                            <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Mins</div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/254736771402?text=Hello!%20I%20would%20like%20to%20RSVP%20for%20the%20Grand%20Tour%20May%201-3%202026.%20Please%20reserve%20my%20slot!" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        Reserve My Slot <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        (function(){
+            var target = new Date('2026-05-01T06:00:00+03:00').getTime();
+            function tick(){
+                var now = Date.now(), diff = target - now;
+                if(diff <= 0){ document.getElementById('cd-days').textContent='0'; return; }
+                document.getElementById('cd-days').textContent  = Math.floor(diff/86400000);
+                document.getElementById('cd-hours').textContent = Math.floor((diff%86400000)/3600000);
+                document.getElementById('cd-mins').textContent  = Math.floor((diff%3600000)/60000);
+            }
+            tick(); setInterval(tick, 60000);
+        })();
+    </script>
+
+    <!-- Upcoming Events -->
+    <section class="events-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle text-gradient">Calendar</span>
+                <h2 class="section-title">Save The Date</h2>
+            </div>
+            
+            <div class="events-grid">
+                <!-- Event 1: Feb (COMPLETED) -->
+                <div class="event-card glass-card" style="opacity: 0.9;">
+                    <div style="position: relative;">
+                        <img src="assets/meet.jpg" alt="Narok Meet" class="event-img" loading="lazy">
+                        <div class="event-date-badge" style="background: #4B5563;">
+                            <span class="day">28</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div style="position: absolute; top: 20px; left: 20px; background: #25d366; color: white; padding: 0.3rem 0.8rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"><i class="fa-solid fa-check-double"></i> COMPLETED</div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-calendar-check"></i> Feb 28, 2026</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Narok City</span>
+                        </div>
+                        <h3 class="event-title">Meet & Greet</h3>
+                        <p class="event-desc">Our first official gathering of the year! A massive turnout in Narok for community bonding, technical exchanges, and a legendary group meal.</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: #25D366;">PAST EVENT</span>
+                            <a href="gallery.html" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">View Gallery</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2: May -->
+                <div class="event-card glass-card">
+                    <div style="position: relative;">
+                        <img src="assets/fleet_highlands.jpg" alt="Grand Tour" class="event-img" loading="lazy">
+                        <div class="event-date-badge">
+                            <span class="day">1-3</span>
+                            <span class="month">May</span>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-clock"></i> Multi-day</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Western Region</span>
+                        </div>
+                        <h3 class="event-title">Grand Tour</h3>
+                        <p class="event-desc">Join us for the ultimate 3-day road trip exploring the beautiful Western Region of Kenya.</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: var(--accent-color);">TBA</span>
+                            <a href="https://wa.me/254736771402?text=Hello%21%20I%20would%20like%20to%20RSVP%20for%20the%20upcoming%20CLUBnoteKE%20event." target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">RSVP Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3: June -->
+                <div class="event-card">
+                    <div style="position: relative;">
+                        <img src="assets/real-1.jpg" alt="Family Day" class="event-img" loading="lazy">
+                        <div class="event-date-badge">
+                            <span class="day">TBC</span>
+                            <span class="month">Jun</span>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-clock"></i> Day Event</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Thogoto (TBC)</span>
+                        </div>
+                        <h3 class="event-title">Prayer Day / Family Day</h3>
+                        <p class="event-desc">A wholesome day for the whole family. Bring your loved ones as we bond away from the tarmac.</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: var(--accent-color);">Family</span>
+                            <a href="https://wa.me/254736771402?text=Hello%21%20I%20would%20like%20to%20RSVP%20for%20the%20upcoming%20CLUBnoteKE%20event." target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">RSVP Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 4: July -->
+                <div class="event-card">
+                    <div style="position: relative;">
+                        <img src="assets/convoy-ke.jpg" alt="Anniversary" class="event-img" loading="lazy">
+                        <div class="event-date-badge">
+                            <span class="day">TBC</span>
+                            <span class="month">Jul</span>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-clock"></i> TBC</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Destination TBC</span>
+                        </div>
+                        <h3 class="event-title">Anniversary Celebration</h3>
+                        <p class="event-desc">Celebrating another year of CLUBnoteKE. We'll be announcing the grand venue and activities soon!</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: var(--accent-color);">Premium Event</span>
+                            <a href="https://wa.me/254736771402?text=Hello%21%20I%20would%20like%20to%20RSVP%20for%20the%20upcoming%20CLUBnoteKE%20event." target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">RSVP Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 5: August -->
+                <div class="event-card">
+                    <div style="position: relative;">
+                        <img src="assets/fleet_nairobi.jpg" alt="Major Drive" class="event-img" loading="lazy">
+                        <div class="event-date-badge">
+                            <span class="day">TBC</span>
+                            <span class="month">Aug</span>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-clock"></i> All Day</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Destination TBC</span>
+                        </div>
+                        <h3 class="event-title">Major Drive</h3><p class="event-desc">The ultimate test of man and machine. Join hundreds of Nissan Notes as we take over the highway for our biggest convoy yet.</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: var(--accent-color);">TBA</span>
+                            <a href="https://wa.me/254736771402?text=Hello%21%20I%20would%20like%20to%20RSVP%20for%20the%20upcoming%20CLUBnoteKE%20event." target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">RSVP Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 6: October -->
+                <div class="event-card">
+                    <div style="position: relative;">
+                        <img src="assets/action.jpg" alt="Vaibu Run" class="event-img" loading="lazy">
+                        <div class="event-date-badge">
+                            <span class="day">TBC</span>
+                            <span class="month">Oct</span>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-clock"></i> TBC</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Unknown</span>
+                        </div>
+                        <h3 class="event-title">Vaibu Run</h3>
+                        <p class="event-desc">A fast-paced, high-'vaibu' drive for the more spirited drivers in the community.</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: var(--accent-color);">Members Only</span>
+                            <a href="https://wa.me/254736771402?text=Hello%21%20I%20would%20like%20to%20RSVP%20for%20the%20upcoming%20CLUBnoteKE%20event." target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">RSVP Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 7: December -->
+                <div class="event-card">
+                    <div style="position: relative;">
+                        <img src="assets/bash.jpg" alt="End of Year" class="event-img" loading="lazy">
+                        <div class="event-date-badge">
+                            <span class="day">TBC</span>
+                            <span class="month">Dec</span>
+                        </div>
+                    </div>
+                    <div class="event-content">
+                        <div class="event-meta">
+                            <span><i class="fa-solid fa-clock"></i> TBC</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Details TBC</span>
+                        </div>
+                        <h3 class="event-title">End-of-Year Event</h3>
+                        <p class="event-desc">Closing out 2026 with a massive bang! Charity drive, awards, and dinner combined.</p>
+                        <div class="event-footer">
+                            <span style="font-weight: 600; color: var(--accent-color);">TBA</span>
+                            <a href="https://wa.me/254736771402?text=Hello%21%20I%20would%20like%20to%20RSVP%20for%20the%20upcoming%20CLUBnoteKE%20event." target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: var(--text-dark); border-color: #E5E7EB; padding: 0.5rem 1rem;">RSVP Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">Have an idea for a meetup or road trip?</p>
+                <a href="contact.html" class="btn btn-primary">Suggest an Event</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Events Preview -->
+    <section class="past-events">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle text-gradient">Moments</span>
+                <h2 class="section-title">Event Recap</h2>
+            </div>
+            <div class="recap-slider" style="position: relative; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 12px; box-shadow: var(--shadow-md);">
+                
+                <div class="recap-slide active" style="position: relative; display: block; animation: fade 1s;">
+                    <img src="assets/real-1.jpg" alt="Samburu Drive" style="width: 100%; height: 400px; object-fit: cover; display: block;" loading="lazy">
+                    <div class="gallery-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; opacity: 1;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;">Samburu Drive</h3>
+                        <p style="opacity: 0.9;">A club road trip to Samburu. The journey covered over 300km of highway driving.</p>
+                    </div>
+                </div>
+
+                <div class="recap-slide" style="position: relative; display: none; animation: fade 1s;">
+                    <img src="assets/meet.jpg" alt="Meat and Greet Narok" style="width: 100%; height: 400px; object-fit: cover; display: block;" loading="lazy">
+                    <div class="gallery-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; opacity: 1;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;">Meat & Greet Narok</h3>
+                        <p style="opacity: 0.9;">A meet and greet event in Narok focused on community bonding and group meals.</p>
+                    </div>
+                </div>
+
+                <div class="recap-slide" style="position: relative; display: none; animation: fade 1s;">
+                    <img src="assets/convoy.jpg" alt="Namanga Road Trip" style="width: 100%; height: 400px; object-fit: cover; display: block;" loading="lazy">
+                    <div class="gallery-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; opacity: 1;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;">Namanga Road Trip</h3>
+                        <p style="opacity: 0.9;">A highway drive to the Namanga border crossing to test vehicle endurance.</p>
+                    </div>
+                </div>
+
+                <div class="recap-slide" style="position: relative; display: none; animation: fade 1s;">
+                    <img src="https://images.unsplash.com/photo-1514525253361-bee8a197c0c5?auto=format&fit=crop&w=1200&q=80" alt="Naivasha Trip" style="width: 100%; height: 400px; object-fit: cover; display: block;" loading="lazy">
+                    <div class="gallery-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; background: linear-gradient(transparent, rgba(0,0,0,0.9)); color: white; opacity: 1;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff;">Naivasha Trip</h3>
+                        <p style="opacity: 0.9;">A two-day community gathering in Naivasha for club members and their families.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="gallery.html" class="btn btn-outline" style="color: var(--text-light); border-color: rgba(255,255,255,0.2);">View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Footer Content Reused -->
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+                    <p>Kenya's premier club for Nissan Note owners. Driving passion, building community, sharing knowledge.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://instagram.com/note_club_kenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://youtube.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@noteclubkenya" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="membership.html">Membership</a></li>
+                        <li><a href="events.html">Events & Meets</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="know-your-car.html">Car Maintenance</a></li>
+                        <li><a href="community.html">Forum</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="charity.html">Charity Work</a></li>
+                        <li><a href="builds.html">Member Builds</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</li>
+                        <li><i class="fa-solid fa-phone"></i> +254 736 771 402</li>
+                        <li><i class="fa-solid fa-envelope"></i> info@clubnoteke.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CLUBnoteKE. All rights reserved. Built for the community. <a href="privacy.html" style="color: var(--accent-color); text-decoration: none; margin-left: 10px;">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/254736771402" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <button id="scrollToTopBtn" class="scroll-top-btn" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://images.unsplash.com;">
+    <title>Know Your Car | CLUBnoteKE</title>
+    <link rel="icon" type="image/png" href="assets/club_logo.png">
+    <meta name="description" content="Comprehensive Nissan Note E11, E12, and E13 guide for Kenyan owners. Engine specs, trim levels, service intervals, and DTC code lookup.">
+    <meta property="og:title" content="Know Your Car Guide | CLUBnoteKE">
+    <meta property="og:description" content="Every Nissan Note owner's essential reference guide. Maintenance tips and technical specs.">
+    <meta property="og:image" content="https://clubnoteke.com/assets/club_logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clubnoteke.com/know-your-car.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#C3002F">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://clubnoteke.com/index.html"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Know Your Car",
+        "item": "https://clubnoteke.com/know-your-car.html"
+      },{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Engine Guide",
+        "item": "https://clubnoteke.com/know-your-car.html#engines"
+      }]
+    }
+    </script>
+    <style>
+        .kyc-section { padding: 5rem 0; border-bottom: 1px solid var(--border-color); }
+        .kyc-section:nth-child(even) { background-color: var(--bg-light); }
+        .section-header-compact { margin-bottom: 3rem; }
+        .section-header-compact h2 { font-size: 2.5rem; font-family: 'Outfit'; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .kyc-badge { background: var(--accent-color); color: white; padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        
+        /* Gen & Trim Cards */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .info-card { 
+            background: var(--card-bg); border-radius: 20px; overflow: hidden; 
+            box-shadow: var(--shadow-md); border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+        .info-card.glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .info-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .card-img-placeholder { 
+            height: 220px; background: #1a1a1a; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            border-bottom: 1px solid var(--border-color); overflow: hidden;
+        }
+        .card-img-placeholder img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .card-img-placeholder i { font-size: 4rem; color: #333; position: absolute; }
+        .card-badge { position: absolute; top: 1.25rem; right: 1.25rem; z-index: 2; }
+        .card-body { padding: 2rem; flex-grow: 1; }
+        .card-meta { color: var(--gold-accent); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; }
+        .card-title { font-size: 1.6rem; font-family: 'Outfit'; margin-bottom: 1rem; color: var(--text-dark); }
+        
+        /* Tables */
+        .table-container { background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-top: 2rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: var(--bg-gray); padding: 1.25rem; text-align: left; font-family: 'Outfit'; border-bottom: 2px solid var(--border-color); }
+        td { padding: 1.25rem; border-bottom: 1px solid var(--border-color); }
+        
+        /* Callouts */
+        .callout { 
+            margin-top: 2rem; padding: 1.5rem; border-radius: 12px; 
+            display: flex; gap: 1.25rem; align-items: center;
+        }
+        .callout-info { background: var(--gold-light); border-left: 5px solid var(--gold-accent); }
+        .callout-warning { background: #FFF5F5; border-left: 5px solid #C3002F; color: #222; }
+        .callout i { font-size: 1.5rem; }
+
+        /* DTC Search */
+        #dtcInput { 
+            width: 100%; padding: 1.25rem 2rem; border-radius: 100px; 
+            border: 2px solid var(--border-color); background: var(--card-bg);
+            font-size: 1.1rem; margin-bottom: 2rem; transition: border-color 0.3s;
+        }
+        #dtcInput:focus { border-color: var(--accent-color); outline: none; }
+
+        /* Fun Facts Slider */
+        .fact-slider {
+            background: linear-gradient(135deg, var(--gold-light) 0%, #fff 100%);
+            border: 2px solid var(--gold-accent);
+            border-radius: 20px;
+            padding: 3rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        .fact-content {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            max-width: 800px;
+        }
+        .fact-text {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            font-family: 'Outfit';
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .fact-icon {
+            font-size: 2.5rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .fade-out { opacity: 0; transform: translateY(-10px); }
+        .fade-in { opacity: 1; transform: translateY(0); }
+
+        .dtc-upsell {
+            background: var(--bg-gray);
+            border: 1px dashed var(--border-color);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: -1px;
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+    <script>(function(){var t=localStorage.getItem("theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+
+    <!-- Nav (Standard) -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/club_logo.png" alt="CLUBnoteKE Logo" style="height: 45px; width: auto; object-fit: contain;">
+                <div class="logo-text">CLUB<span>note</span>KE</div></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="know-your-car.html" class="active">Know Your Car</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="mobile-login-item"><a href="login.html" class="btn btn-outline" style="display:inline-block;padding:0.5rem 1.5rem;width:auto;margin-top:0.5rem;">Member Login</a></li>
+            </ul>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="login.html" class="btn btn-outline nav-login-btn" style="padding:0.5rem 1rem;font-size:0.9rem;border-color:rgba(255,255,255,0.2);">Member Login</a>
+                        <button id="darkModeToggle" class="btn btn-outline dark-mode-btn" style="padding: 0.5rem; border: none; font-size: 1.2rem;" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <img src="assets/fleet.png" alt="Fleet" class="page-header-bg">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 class="page-title reveal active">Know Your Car</h1>
+            <p style="font-size: 1.2rem; margin-top: 1rem;">The definitive guide to E11, E12, and E13 models in Kenya.</p>
+        </div>
+    </header>
+
+    <!-- 1. THE GENERATIONS -->
+    <section class="kyc-section">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>The Generations</h2>
+                <p>Evolution of the Note since 2005.</p>
+            </div>
+            <div class="card-grid">
+                <!-- E11 -->
+                <div class="info-card glass-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <img src="assets/note_e11.png" alt="Nissan Note E11" loading="lazy" style="object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">2005 – 2013</span>
+                        <h3 class="card-title">Generation E11</h3>
+                        <p>JDM right-hand drive import, B platform. Known for reliability and spacious boxy interior.</p>
+                    </div>
+                </div>
+                <!-- E12 -->
+                <div class="info-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <span class="kyc-badge card-badge">Most Common in KE</span>
+                        <img src="assets/note_e12.png" alt="Nissan Note E12" loading="lazy" style="object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">2012 – 2020</span>
+                        <h3 class="card-title">Generation E12</h3>
+                        <p>The staple of Kenyan roads. Sleek design, DIG-S engines, and exceptional fuel economy.</p>
+                    </div>
+                </div>
+                <!-- E13 -->
+                <div class="info-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <span class="kyc-badge card-badge" style="background:#444;">Rare in KE</span>
+                        <img src="assets/note_e13.png" alt="Nissan Note E13" loading="lazy" style="object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">2021 – Present</span>
+                        <h3 class="card-title">Generation E13</h3>
+                        <p>Next-gen e-Power hybrid. Futuristic design and purely electric drive experience from the battery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ENGINE GUIDE -->
+    <section class="kyc-section" id="engines">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>Engine Guide</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Series</th><th>Engine Code</th><th>Description</th><th>Economy (JC08)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>E11</td><td>HR15DE</td><td>1.5L, 109PS - Most common E11 in KE</td><td>~18 km/L</td></tr>
+                        <tr><td>E11</td><td>HR16DE</td><td>1.6L, 109PS - High Trim only</td><td>~16 km/L</td></tr>
+                        <tr><td>E12</td><td>HR12DE</td><td>1.2L, 78HP - Reliable Base Engine</td><td>23.4 km/L</td></tr>
+                        <tr><td>E12</td><td>HR12DDR</td><td>1.2L Supercharged DIG-S, 97HP</td><td>26.2 km/L</td></tr>
+                        <tr><td>E13</td><td>e-POWER</td><td>1.2L Generator / 116PS Electric Motor</td><td>29.5 km/L</td></tr>
+                        <tr><td>E12</td><td>HR16DE</td><td>1.6L NISMO-S, 138HP Performance</td><td>16.0 km/L</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="callout callout-info">
+                <i class="fa-solid fa-city"></i>
+                <div>
+                    <strong>Kenya Real-World Economy:</strong> 
+                    12–15km/L in Nairobi traffic; 18km/L+ on open highways.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2.5. TECHNOLOGY HUB -->
+    <section class="kyc-section" id="technology">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>Advanced Technologies</h2>
+                <p>The engineering that powers the Note's efficiency.</p>
+            </div>
+            <div class="card-grid">
+                <!-- e-POWER -->
+                <div class="info-card">
+                    <div class="card-body">
+                        <span class="kyc-badge" style="margin-bottom:1rem; display:inline-block;">Hybrid Evolution</span>
+                        <h3 class="card-title">e-POWER System</h3>
+                        <p>A series-hybrid system where the wheels are 100% driven by an electric motor. The gasoline engine (HR12) acts purely as a generator to charge the battery.</p>
+                        <ul style="margin-top:1rem; font-size: 0.9rem; color: var(--text-muted);">
+                            <li><strong>E12 Note:</strong> 109HP / 254Nm torque.</li>
+                            <li><strong>E13 Note:</strong> 116HP / 280Nm torque.</li>
+                            <li><strong>e-Pedal:</strong> Allows starting, accelerating, and decelerating to a stop using only the accelerator.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- DIG-S -->
+                <div class="info-card">
+                    <div class="card-body">
+                        <span class="kyc-badge" style="margin-bottom:1rem; display:inline-block; background: #222;">Supercharged</span>
+                        <h3 class="card-title">DIG-S (HR12DDR)</h3>
+                        <p>Direct Injection Gasoline Supercharger. This engine uses the Miller Cycle and an on-demand supercharger to achieve 1.5L power with 1.0L economy.</p>
+                        <ul style="margin-top:1rem; font-size: 0.9rem; color: var(--text-muted);">
+                            <li><strong>Output:</strong> 98 PS / 142 Nm.</li>
+                            <li><strong>Efficiency:</strong> High compression ratio (12:1+) for maximum thermal efficiency.</li>
+                            <li><strong>Response:</strong> Instant torque from the Eaton supercharger.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Pure Drive -->
+                <div class="info-card">
+                    <div class="card-body">
+                        <span class="kyc-badge" style="margin-bottom:1rem; display:inline-block; background: var(--gold-accent);">Efficiency Badge</span>
+                        <h3 class="card-title">Pure Drive</h3>
+                        <p>Nissan's designation for vehicles that exceed emissions standards. It incorporates a suite of eco-technologies working in harmony.</p>
+                        <ul style="margin-top:1rem; font-size: 0.9rem; color: var(--text-muted);">
+                            <li><strong>Idling Stop:</strong> Automatically shuts off the engine at traffic lights.</li>
+                            <li><strong>Xtronic CVT:</strong> Optimized for smoothness and fuel conservation.</li>
+                            <li><strong>Eco Mode:</strong> Remaps throttle and CVT for maximum distance per liter.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TRIM LEVELS (E12) -->
+    <section class="kyc-section">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>Trim Levels (E12 Focus)</h2>
+                <p>Understanding which specs your vehicle has.</p>
+            </div>
+            <div class="card-grid">
+                <!-- S Grade -->
+                <div class="info-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <img src="assets/note_e12.png" alt="S Grade" loading="lazy" style="filter: grayscale(1); opacity: 0.8;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">Base Entry</span>
+                        <h3 class="card-title">S Grade</h3>
+                        <p>1.2L HR12DE, Key start, Manual A/C, 14" Steel rims. Purely functional.</p>
+                    </div>
+                </div>
+                <!-- X Grade -->
+                <div class="info-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <span class="kyc-badge card-badge">Value Leader</span>
+                        <img src="assets/note_e12.png" alt="X Grade" loading="lazy" style="opacity: 1;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">Mid Range</span>
+                        <h3 class="card-title">X Grade</h3>
+                        <p>16" Alloys, Lip spoiler, Climate control, Fog lights, Power mirrors.</p>
+                    </div>
+                </div>
+                <!-- Medalist -->
+                <div class="info-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <img src="assets/blue_silver_stance.jpg" alt="Medalist" loading="lazy" style="object-fit: cover; opacity: 1;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">Luxury</span>
+                        <h3 class="card-title">Medalist / Rider</h3>
+                        <p>Push-start, Full leather, Premium Audio, Luxury Body Kit.</p>
+                    </div>
+                </div>
+                <!-- NISMO -->
+                <div class="info-card">
+                    <div class="card-img-placeholder" style="background: transparent;">
+                        <span class="kyc-badge card-badge" style="background:#C3002F;">Performance</span>
+                        <img src="assets/hero-wide-lineup.jpg" alt="NISMO" loading="lazy" style="object-fit: cover; object-position: 90% center; opacity: 1;">
+                    </div>
+                    <div class="card-body">
+                        <span class="card-meta">Nismo-S</span>
+                        <h3 class="card-title">NISMO Edition</h3>
+                        <p>Recaro seats, 138HP HR16DE, Sport suspension, Aggressive stance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SERVICE INTERVALS -->
+    <section class="kyc-section">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>Service Intervals</h2>
+            </div>
+            <div class="card-grid">
+                <div class="info-card" style="padding:2rem;">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Minor (5,000km)</h3>
+                    <ul style="list-style:none; padding:0;">
+                        <li style="padding:0.5rem 0; border-bottom:1px solid var(--border-color);"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> Engine Oil & Filter</li>
+                        <li style="padding:0.5rem 0; border-bottom:1px solid var(--border-color);"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> Air Cleaner Check</li>
+                        <li style="padding:0.5rem 0;"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> Brake Inspection</li>
+                    </ul>
+                </div>
+                <div class="info-card" style="padding:2rem;">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Major (10,000km)</h3>
+                    <ul style="list-style:none; padding:0;">
+                        <li style="padding:0.4rem 0; border-bottom:1px solid var(--border-color);"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> All Minor items</li>
+                        <li style="padding:0.4rem 0; border-bottom:1px solid var(--border-color);"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> Fuel & ATF Filters</li>
+                        <li style="padding:0.4rem 0; border-bottom:1px solid var(--border-color);"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> Spark Plugs (Iridium)</li>
+                        <li style="padding:0.4rem 0;"><i class="fa-solid fa-check" style="color:var(--gold-accent); margin-right:10px;"></i> Full CVT Fluid Service</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="callout callout-warning">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div style="color:#222;">
+                    <strong>Never skip ATF oil change on CVT models.</strong> 
+                    This is the single most important service item for your import.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 & 6. PARTS & WATCH OUT -->
+    <section class="kyc-section">
+        <div class="container">
+            <div class="card-grid">
+                <div>
+                    <h2>Parts Availability</h2>
+                    <p style="margin-top:1rem;">Service parts are affordable and ubiquitous in KE. Body parts are becoming common for E12. <strong>Warning:</strong> E11 and E12 parts are NOT interchangeable. Always verify chassis code NE11/E11 vs E12/NE12 before buying.</p>
+                </div>
+                <div>
+                    <h2>Watch Out For</h2>
+                    <ul style="list-style:none; padding:0; margin-top:1rem;">
+                        <li style="margin-bottom:1rem; display:flex; gap:1rem;"><i class="fa-solid fa-gears" style="color:var(--accent-color);"></i> <span><strong>CVT Shudder:</strong> Common on high-mileage imports. Fixed by fresh ATF.</span></li>
+                        <li style="margin-bottom:1rem; display:flex; gap:1rem;"><i class="fa-solid fa-oil-can" style="color:var(--accent-color);"></i> <span><strong>DIG-S Oil:</strong> Requires premium supercharger oil.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. DTC LOOKUP -->
+    <section class="kyc-section" id="dtc-tool">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>DTC Code Lookup Tool</h2>
+                <p>Note-specific error code database.</p>
+            </div>
+            <input type="text" id="dtcInput" placeholder="Search code (e.g. P1715)...">
+            <div class="table-container">
+                <table id="dtcTable">
+                    <thead><tr><th>Code</th><th>Meaning</th><th>Symptoms / Fix</th></tr></thead>
+                    <tbody id="dtcList">
+                        <!-- JS inject -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FUN FACTS -->
+    <section class="kyc-section">
+        <div class="container">
+            <div class="section-header-compact">
+                <h2>Nissan Note Heritage & Trivia</h2>
+                <p>Flash facts about the car we love.</p>
+            </div>
+            <div class="fact-slider" id="factSlider">
+                <div class="fact-content" id="factContent">
+                    <i class="fa-solid fa-lightbulb fact-icon"></i>
+                    <p class="fact-text" id="factText">Loading amazing Note facts...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIRECTORY -->
+    <section class="kyc-section">
+        <div class="container">
+            <h2 id="partner-garages">Authorized Service Directory</h2>
+            <div class="card-grid" style="margin-top:2rem; grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <div class="info-card" style="padding:2rem; text-align: center; border: 2px solid var(--gold-accent);">
+                    <span style="font-weight:700; color:var(--accent-color); font-size:12px; letter-spacing: 1px;">PRIMARY SERVICE PARTNER</span>
+                    <h3 style="font-size: 2rem; margin: 1rem 0;">Insight Auto Services</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">Located along Northern Bypass, Nairobi. Specialized in Nissan Note maintenance, CVT diagnostics, and genuine parts.</p>
+                    <p style="font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 1.5rem;"><i class="fa-solid fa-phone" style="color: var(--gold-accent); margin-right: 10px;"></i> +254 705 247 075</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Insight+Auto+Services+Northern+Bypass+Nairobi" target="_blank" class="btn btn-dark" style="display: inline-flex; align-items: center; gap: 10px; padding: 0.8rem 1.5rem;">
+                            <i class="fa-solid fa-location-dot"></i> Get Directions
+                        </a>
+                        <a href="tel:+254705247075" class="btn btn-gold" style="display: inline-flex; align-items: center; gap: 10px; padding: 0.8rem 1.5rem;">
+                            <i class="fa-solid fa-phone"></i> Call Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container"><p>&copy; 2026 CLUBnoteKE</p></div>
+    </footer>
+
+    <script>
+        const codes = [
+            { c: "P1715", m: "CVT Input Speed Sensor", f: "Limp mode / Jerking. Replace Sensor 1." },
+            { c: "P0420", m: "Catalytic Efficiency", f: "Check O2 sensor or use fuel cleaner." },
+            { c: "P0171", m: "System Lean", f: "Vacuum leak or dirty MAF sensor." },
+            { c: "P0868", m: "CVT Pressure Low", f: "Change CVT fluid immediately." },
+            { c: "P0335", m: "Crank Sensor", f: "Common stall issue. Replace sensor." },
+            { c: "P1778", m: "CVT Step Motor", f: "CVT failure symptom. Check solenoids." },
+            { c: "P0101", m: "MAF Sensor Error", f: "Clean MAF with specialized spray." },
+            { c: "P0300", m: "Random Misfire", f: "Check ignition coils and NGK spark plugs." },
+            { c: "P0507", m: "High Idle RPM", f: "Perform Idle Air Volume Learning." },
+            { c: "P1212", m: "TCS/ABS Signal", f: "Check ABS wheel speed sensors." },
+            { c: "P0744", m: "TCC Solenoid", f: "Transmission shudder. Check fluid." },
+            { c: "P1722", m: "Vehicle Speed Fail", f: "Gearbox speed sensor or ABS line." },
+            { c: "P0132", m: "O2 Sensor Circuit High", f: "Replace primary O2 sensor." },
+            { c: "P1564", m: "Cruise Control Buttons", f: "Clock spring in steering column." },
+            { c: "P1121", m: "Electronic Throttle", f: "Power loss. Clean throttle body." },
+            { c: "P0442", m: "Small EVAP Leak", f: "Check fuel cap sealing ring." },
+            { c: "P1705", m: "Throttle Position (CVT)", f: "Check Accelerator Pedal Sensor." },
+            { c: "P0121", m: "TPS Sensor Performance", f: "Throttle hesitation. Reset throttle." },
+            { c: "P0550", m: "Power Steering Sensor", f: "Check sensor near PS pump." },
+            { c: "P0340", m: "Camshaft Position", f: "Hard start / Stalling at lights." }
+        ];
+        const list = document.getElementById('dtcList');
+        const input = document.getElementById('dtcInput');
+        const upsellHtml = `
+            <div class="dtc-upsell">
+                <p style="margin-bottom:1rem; color:var(--text-muted);">Showing 6 of 100+ diagnostic codes. Join the club to access the full database.</p>
+                <a href="membership.html" class="btn btn-gold" style="padding:0.6rem 1.5rem; font-size:0.9rem;">Unlock Full Database</a>
+            </div>
+        `;
+
+        function render(arr) {
+            const limit = 6;
+            const displayArr = arr.slice(0, limit);
+            
+            list.innerHTML = displayArr.map(x => `
+                <tr>
+                    <td style="color:var(--accent-color); font-weight:800;">${x.c}</td>
+                    <td><strong>${x.m}</strong></td>
+                    <td style="font-size:13px; color:var(--text-muted);">${x.f}</td>
+                </tr>
+            `).join('');
+
+            // Add upsell if more results exist
+            const existingUpsell = document.querySelector('.dtc-upsell');
+            if (existingUpsell) existingUpsell.remove();
+
+            if (arr.length > limit) {
+                list.closest('.table-container').insertAdjacentHTML('afterend', upsellHtml);
+            }
+        }
+        input.oninput = (e) => {
+            const v = e.target.value.toUpperCase();
+            render(codes.filter(x => x.c.includes(v) || x.m.toUpperCase().includes(v)));
+        };
+        render(codes);
+
+        // FUN FACTS ENGINE
+        const facts = [
+            "The Nissan Note concept car first debuted at the 2004 Paris Motor Show with distinctive boomerang LED lights.",
+            "In 2018, the Nissan Note was the best-selling car in Japan, moving over 136,000 units.",
+            "The Note's 'e-POWER' system was the first mass-production series hybrid to win the RJC Technology of the Year award.",
+            "The premium Note Aura features a segment-first Bose Personal Plus sound system with speakers in the headrests.",
+            "Some high-trim Notes feature a refrigerated glove box capable of chilling up to 13 soda cans.",
+            "The Note is built on the versatile Nissan B platform, shared with the Nissan Micra and Renault Clio.",
+            "The second-generation Note (E12) achieved a drag coefficient of 0.29, making it one of the most aerodynamic in its class.",
+            "The e-POWER drivetrain allows for 'One-Pedal' driving, where you rarely need to touch the brake in city traffic.",
+            "The Nissan Note and Note Aura won the prestigious 2021-2022 Japan Car of the Year award.",
+            "The E12 facelift in 2017 introduced the signature 'V-Motion' grille design seen across the modern Nissan lineup.",
+            "In Thailand, the Nissan Note won the 'Product of the Year 2020' award for its Intelligent Mobility features.",
+            "The HR12DDR engine uses a Miller Cycle and an Eaton supercharger to achieve 1.5L performance with 1.0L fuel economy.",
+            "The 1st Gen Note (E11) was specifically targeted at 'Active Super-Parents' who needed space and agility.",
+            "Nissan Note's rear doors open to a wide 85-degree angle, making it one of the easiest cars for loading baby seats.",
+            "The 'Around View Monitor' (360-degree camera) was a high-tech feature rare for compact cars when it launched in the Note.",
+            "The Nissan Note Aura NISMO features body styling inspired by Nissan's Formula E race cars.",
+            "By 2012, even before the e-POWER boom, over 940,000 Nissan Notes had been sold globally."
+        ];
+
+        let factIndex = 0;
+        const factText = document.getElementById('factText');
+        const factContent = document.getElementById('factContent');
+
+        function shuffleFact() {
+            factContent.classList.add('fade-out');
+            
+            setTimeout(() => {
+                factIndex = (factIndex + 1) % facts.length;
+                factText.textContent = facts[factIndex];
+                factContent.classList.remove('fade-out');
+                factContent.classList.add('fade-in');
+            }, 500);
+        }
+
+        // Initialize first fact
+        factText.textContent = facts[0];
+        // Start 8-second interval
+        setInterval(shuffleFact, 8000);
+    </script>
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
